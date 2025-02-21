@@ -1,0 +1,98 @@
+@use '../styles.scss';
+
+.container {
+    width: 100%;
+    color: styles.$text-color;
+
+    .topHeader {
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: styles.$button-color;
+
+        .quote {
+            @include styles.font-poppins-regular(14px);
+            padding-right: 10px;
+        }
+
+        .linkQuote {
+            @include styles.font-poppins-regular(14px);
+            color: styles.$text-color;
+        }
+    }
+
+    .header {
+        width: 81.25%;
+        height: 38px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 40px;
+        padding-bottom: 16px;
+        margin: auto;
+        color: styles.$text-color-2;
+        background-color: styles.$background-color;
+
+        .logo {
+            @include styles.font-inter-bold(24px);
+        }
+
+        .nav {
+            list-style-type: none;
+            padding: 0;
+            width: 20%;
+            display: flex;
+            justify-content: space-between;
+            @include styles.font-poppins-regular(16px);
+
+            .navLink {
+                color: styles.$text-color-2;
+                text-decoration: none;
+            }
+
+            .navLinkActive {
+                border-bottom: 1px solid styles.$text-color-2;
+            }
+        }
+
+        .search {
+            display: flex;
+            height: 38px;
+            width: 30%;
+            align-items: center;
+            justify-content: space-between;
+
+            .searchBar {
+                width: 70%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 7px 12px 7px 20px;
+                border-radius: 4px;
+                background-color: styles.$secondary-color;
+
+                .inputSearch {
+                    background-color: styles.$secondary-color;
+                    width: 80%;
+                    border: none;
+                    padding: 7px 0;
+
+                    &::placeholder {
+                        @include styles.font-poppins-regular(12px);
+                    }
+                }
+
+                button {
+                    @extend .inputSearch; // Extend shared styles from .inputSearch
+                    width: auto; // Reset width if needed, or adjust as per design
+                    padding: 0; // Reset padding if needed, or adjust as per design
+                }
+            }
+        }
+    }
+
+    hr {
+        margin: 0;
+    }
+}

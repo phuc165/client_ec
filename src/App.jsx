@@ -6,6 +6,7 @@ import { publicRoutes } from './routes';
 import { DefaultLayout } from './Layouts';
 import { Fragment } from 'react';
 
+import './styles/app.scss';
 function App() {
     return (
         <BrowserRouter>

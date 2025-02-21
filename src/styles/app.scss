@@ -1,0 +1,11 @@
+@use './styles.scss';
+
+
+//global style
+body {
+    margin: auto;
+}
+
+*:focus {
+    outline: none;
+}

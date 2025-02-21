@@ -1,0 +1,54 @@
+//title font
+.poppins {
+    font-family: "Poppins", serif;
+    font-style: normal;
+}
+
+@mixin font-poppins-regular($font-size) {
+    @extend .poppins;
+    font-weight: 400;
+    font-size: $font-size;
+}
+
+@mixin font-poppins-medium($font-size) {
+    @extend .poppins;
+    font-weight: 500;
+    font-size: $font-size;
+}
+
+@mixin font-poppins-semibold($font-size) {
+    @extend .poppins;
+    font-weight: 600;
+    font-size: $font-size;
+}
+
+//header font
+.inter {
+    font-family: "Inter", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+@mixin font-inter-regular($font-size) {
+    @extend .inter;
+    font-weight: 400;
+    font-size: $font-size;
+}
+
+@mixin font-inter-medium($font-size) {
+    @extend .inter;
+    font-weight: 500;
+    font-size: $font-size;
+}
+
+@mixin font-inter-semibold($font-size) {
+    @extend .inter;
+    font-weight: 600;
+    font-size: $font-size;
+}
+
+@mixin font-inter-bold($font-size) {
+    @extend .inter;
+    font-weight: 700;
+    font-size: $font-size;
+}

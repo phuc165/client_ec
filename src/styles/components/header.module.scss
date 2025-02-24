@@ -23,7 +23,7 @@
     }
 
     .header {
-        width: 81.25%;
+        width: 83%;
         height: 38px;
         display: flex;
         justify-content: space-between;
@@ -52,7 +52,7 @@
             }
 
             .navLinkActive {
-                border-bottom: 1px solid styles.$text-color-2;
+                border-bottom: 1px solid styles.$text-color-1;
             }
         }
 

@@ -2,9 +2,14 @@
 
 
 //global style
-body {
-    margin: auto;
+html {
+    overflow-x: hidden;
+
+    body {
+        margin: 0;
+    }
 }
+
 
 *:focus {
     outline: none;

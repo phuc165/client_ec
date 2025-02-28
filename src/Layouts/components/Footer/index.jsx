@@ -69,16 +69,16 @@ function Footer() {
                         </div>
                     </div>
                     <div className={clsx(styles.socialMedia)}>
-                        <Link>
+                        <Link to='https://www.facebook.com/646564696E73696465'>
                             <FbIcon />
                         </Link>
-                        <Link>
+                        <Link to='https://www.instagram.com/t.phuc_l/'>
                             <InsIcon />
                         </Link>
                         <Link>
                             <XIcon />
                         </Link>
-                        <Link>
+                        <Link to='https://www.linkedin.com/in/t%E1%BA%A5n-ph%C3%BAc-h%C3%A0-5444a0349/'>
                             <LinIcon />
                         </Link>
                     </div>

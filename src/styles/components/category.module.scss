@@ -1,0 +1,66 @@
+@use '../styles.scss';
+
+.wrapper {
+    display: inline-block;
+    width: 16%;
+    @include styles.font-poppins-regular(16px);
+    border-right: 0.5px rgba(0, 0, 0, 0.2) solid;
+    padding-right: 30px;
+    padding-top: 45px;
+
+    .container {
+        position: relative;
+
+        .categoryList {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            padding-inline-start: 0;
+
+
+            .categoryItem {
+                cursor: pointer;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding-bottom: 27px;
+
+                .categoryLink {
+                    text-decoration: none;
+                    color: styles.$text-color-2;
+                }
+
+            }
+
+            .categoryWithSub {
+                position: relative;
+            }
+
+            .subCategoryContainer {
+                position: absolute;
+                left: 100%;
+                top: 0;
+                width: 16rem;
+                background-color: white;
+                z-index: 10;
+
+                .subCategoryList {
+                    display: flex;
+                    flex-direction: column;
+
+                    .subCategoryItem {
+                        padding-bottom: 27px;
+                        cursor: pointer;
+                        list-style: none;
+
+                    }
+                }
+            }
+
+            .chevron {
+                height: 1rem;
+                width: 1rem;
+            }
+        }
+    }
+}

@@ -2,13 +2,14 @@ import styles from '../../styles/components/home.module.scss';
 import clsx from 'clsx';
 
 import Category from '../../components/Category';
+import Banner from '../../components/Banner';
 
 function Home() {
     return (
         <div className={clsx(styles.container)}>
             <div className={clsx(styles.belowHeader)}>
                 <Category></Category>
-                <div className={clsx(styles.verticalLine)}></div>
+                <Banner></Banner>
             </div>
 
             <div className={clsx(styles.upperFooter)}>

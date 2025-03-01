@@ -1,0 +1,73 @@
+@use '../styles.scss';
+
+.container {
+    width: 76%;
+    height: 441px;
+    margin: 45px 0 0 auto;
+
+    .slide {
+        width: 100%;
+        height: 100%;
+        position: relative;
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .navigation {
+            position: absolute;
+            /* Position navigation dots absolutely */
+            bottom: 15px;
+            /* Adjust this value to position dots above the slide */
+            left: 50%;
+            /* Center horizontally */
+            transform: translateX(-50%);
+            /* Adjust for the width of the navigation */
+            display: flex;
+            /* For easy dot alignment */
+            justify-content: center;
+            /* Center dots horizontally within navigation */
+            align-items: center;
+            /* Center dots vertically within navigation (optional) */
+            /* ... other existing navigation styles if any ... */
+            /* styles.module.css or your CSS file */
+
+            .dot {
+                width: 12px;
+                /* Adjust dot size */
+                height: 12px;
+                /* Adjust dot size */
+                border-radius: 50%;
+                /* Make dots circular */
+                border: 2px solid gray;
+                /* Gray border for inactive dots */
+                background-color: transparent;
+                /* Make inactive dots transparent inside */
+                margin: 0 5px;
+                /* Add horizontal space between dots */
+                cursor: pointer;
+                /* Indicate they are clickable */
+                transition: border-color 0.3s, background-color 0.3s;
+                /* Smooth transition for visual feedback */
+            }
+
+            .active-dot {
+                border-color: #fff;
+                /* White border for active dot */
+                background-color: #f00;
+                /* Red background for active dot */
+                border-width: 3px;
+                /* Make active border thicker if needed */
+            }
+
+            .inactive-dot {
+                border-color: rgba(255, 255, 255, 0.5);
+                /* Semi-transparent white-ish gray for inactive */
+            }
+        }
+
+    }
+
+
+}

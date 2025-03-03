@@ -1,0 +1,99 @@
+@use '../styles.scss';
+
+.container {
+    width: 23%;
+
+    .image {
+        background-color: styles.$secondary-color;
+        position: relative;
+        height: 383px;
+        border-radius: 4px;
+
+        &:hover {
+            .addCartButton {
+                visibility: visible;
+                opacity: 1;
+            }
+        }
+
+        img {
+            width: 100%;
+        }
+
+        .addCartButton {
+            position: absolute;
+            width: 100%;
+            height: 40px;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            background-color: styles.$button-color;
+            border-radius: 0 0 5px 5px;
+            cursor: pointer;
+            z-index: 10;
+            color: styles.$text-color;
+            text-align: center;
+            align-content: center;
+            @include styles.font-poppins-medium(16px);
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out;
+            opacity: 0;
+        }
+
+        .discount {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 60px;
+            height: 30px;
+            border-radius: 4px;
+            @include styles.font-poppins-regular(12px);
+            color: styles.$text-color;
+            background-color: styles.$button-color-2;
+            text-align: center;
+            align-content: center;
+        }
+
+        .heart {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 34px;
+            height: 34px;
+        }
+    }
+
+    .title {
+        @include styles.font-poppins-medium(16px);
+        margin-top: 23px;
+    }
+
+    .priceContainer {
+        margin-top: 15px;
+        display: flex;
+
+        .newPrice {
+            margin-right: 12px;
+            color: styles.$secondary-color-2;
+            @include styles.font-poppins-medium(16px);
+        }
+
+        .oldPrice {
+            @include styles.font-poppins-medium(16px);
+            color: styles.$text-color-2;
+            opacity: 50%;
+            text-decoration: line-through;
+        }
+    }
+
+    .rateContainer {
+        display: flex;
+        margin-top: 15px;
+
+        .rate {
+            margin-left: 12px;
+            @include styles.font-poppins-semibold(14px);
+            opacity: 50%;
+        }
+    }
+}

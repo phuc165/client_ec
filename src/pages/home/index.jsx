@@ -3,7 +3,7 @@ import clsx from 'clsx';
 
 import Category from '../../components/Category';
 import Banner from '../../components/Banner';
-
+import FlashSale from '../../components/FlashSale';
 function Home() {
     return (
         <div className={clsx(styles.container)}>
@@ -11,6 +11,8 @@ function Home() {
                 <Category></Category>
                 <Banner></Banner>
             </div>
+
+            <FlashSale></FlashSale>
 
             <div className={clsx(styles.upperFooter)}>
                 <div className={clsx(styles.upperFooterContent)}>

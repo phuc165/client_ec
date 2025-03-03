@@ -1,0 +1,9 @@
+@use '../styles.scss';
+
+.container {
+    width: 20px;
+    height: 40px;
+    border-radius: 4px;
+    background-color: styles.$secondary-color-2;
+    margin-right: 16px;
+}

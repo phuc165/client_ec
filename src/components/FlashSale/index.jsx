@@ -1,70 +1,125 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import styles from '../../styles/components/flashSale.module.scss';
 import clsx from 'clsx';
+
 import CountdownTimer from '../CountdownTimer';
 import TitleDecor from '../TitleDecor';
 import ProductCard from '../ProductCard';
-import LeftArrow from '../../assets/svg/LeftArrow';
-import RightArrow from '../../assets/svg/RightArrow';
+import ViewAllButton from '../ViewAllButton';
+import LeftArrowButton from '../LeftArrowButton';
+import RightArrowButton from '../RightArrowButton';
+import ProductCardSkeleton from '../ProductCardSkeleton';
 
 const FlashSale = () => {
-    const [products, setProduct] = useState(null);
+    // State management
+    const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [skip, setSkip] = useState(0); // State to manage how many items to skip
+    const [error, setError] = useState(null);
+    const [skip, setSkip] = useState(0);
+    const [totalProducts, setTotalProducts] = useState(0);
 
+    // Fetch products with improved error handling and data management
     useEffect(() => {
-        setLoading(true);
-        fetch(`https://dummyjson.com/products?limit=4&skip=${skip}&select=title,price,rating,discountPercentage,reviews,images`)
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data);
-                setProduct(data.products);
-                setLoading(false);
-            })
-            .catch((error) => {
-                console.error('Error fetching products:', error);
-                setLoading(false);
-            });
-    }, [skip]); // Re-fetch products when skip changes
+        const fetchProducts = async () => {
+            setLoading(true);
+            setError(null);
 
-    const handleNextPage = () => {
-        setSkip((prevSkip) => prevSkip + 4); // Increment skip to load next 4 items
+            try {
+                const response = await fetch(
+                    `https://dummyjson.com/products?limit=4&skip=${skip}&select=title,price,rating,discountPercentage,reviews,images`,
+                );
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch products');
+                }
+
+                const data = await response.json();
+
+                // Validate and transform product data
+                const validProducts = data.products.map((product) => ({
+                    ...product,
+                    discountedPrice: calculateDiscountedPrice(product.price, product.discountPercentage),
+                }));
+
+                setProducts(validProducts);
+                setTotalProducts(data.total);
+                setLoading(false);
+            } catch (err) {
+                setError(err.message);
+                setLoading(false);
+            }
+        };
+
+        fetchProducts();
+    }, [skip]);
+
+    // Helper function to calculate discounted price
+    const calculateDiscountedPrice = (originalPrice, discountPercentage) => {
+        return ((originalPrice * (100 - discountPercentage)) / 100).toFixed(2);
     };
 
-    const handlePrevPage = () => {
-        if (skip >= 4) {
-            setSkip((prevSkip) => prevSkip - 4); // Decrement skip to load previous 4 items
+    // Pagination handlers with safety checks
+    const handleNextPage = () => {
+        if (skip + 4 < totalProducts) {
+            setSkip((prevSkip) => prevSkip + 4);
         }
     };
 
-    if (loading) {
-        return <p>Loading Flash Sale Products...</p>;
-    }
+    const handlePrevPage = () => {
+        setSkip((prevSkip) => Math.max(0, prevSkip - 4));
+    };
 
-    if (!products) {
-        return <p>Error loading Flash Sale Products.</p>;
-    }
+    // Memoized rendering of product cards for performance
+    const productCards = useMemo(
+        () =>
+            products.map((product) => (
+                <ProductCard
+                    key={product.id}
+                    product={{
+                        ...product,
+                        discountedPrice: calculateDiscountedPrice(product.price, product.discountPercentage),
+                    }}
+                />
+            )),
+        [products],
+    );
 
     return (
         <div className={clsx(styles.container)}>
             <div className={clsx(styles.title)}>
-                <TitleDecor></TitleDecor>Today's
+                <TitleDecor />
+                Today's
             </div>
             <div className={clsx(styles.subTitle)}>
                 <p>Flash Sales</p>
-                <CountdownTimer initialDays={3} initialHours={23} initialMinutes={19} initialSeconds={56} />
+                <CountdownTimer />
                 <div className={clsx(styles.navigation)}>
-                    <button onClick={handlePrevPage} style={{ cursor: skip >= 4 ? 'pointer' : 'default', opacity: skip >= 4 ? 1 : 0.5 }}>
-                        <LeftArrow />
-                    </button>
-                    <button onClick={handleNextPage} style={{ cursor: 'pointer' }}>
-                        <RightArrow />
-                    </button>
+                    <LeftArrowButton onClick={handlePrevPage} skip={skip} />
+                    <RightArrowButton onClick={handleNextPage} skip={skip} totalProducts={totalProducts} />
                 </div>
             </div>
             <div className={clsx(styles.productContainer)}>
-                {Array.isArray(products) && products.map((product) => <ProductCard product={product} key={product.id} />)}
+                {loading ? (
+                    <>
+                        <ProductCardSkeleton />
+                        <ProductCardSkeleton />
+                        <ProductCardSkeleton />
+                        <ProductCardSkeleton />
+                    </>
+                ) : error ? (
+                    <div className={styles.errorContainer}>
+                        <p>Error: {error}</p>
+                        <button onClick={() => window.location.reload()}>Try Again</button>
+                    </div>
+                ) : products.length > 0 ? (
+                    productCards
+                ) : (
+                    <div className={styles.noProductsContainer}>
+                        <p>No products available</p>
+                    </div>
+                )}
             </div>
+            <ViewAllButton content='View All Products' page='homeFlashSale' />
         </div>
     );
 };

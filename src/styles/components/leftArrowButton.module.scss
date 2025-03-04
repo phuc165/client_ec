@@ -1,0 +1,15 @@
+@use '../styles.scss';
+
+button {
+    background: none;
+    border: none;
+
+    svg {
+        margin-left: 8px;
+    }
+}
+
+.disabledButton {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

@@ -1,0 +1,20 @@
+@use '../styles.scss';
+
+.button {
+    background-color: styles.$button-color-2;
+    color: styles.$text-color;
+    @include styles.font-poppins-medium(16px);
+    border: none;
+    border-radius: 4px;
+
+    &:hover {
+        background-color: styles.$button-hover;
+    }
+}
+
+.homeFlashSale {
+    align-self: center;
+    width: 20%;
+    height: 56px;
+    margin-top: 48px;
+}

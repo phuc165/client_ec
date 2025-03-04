@@ -1,0 +1,116 @@
+@use '../styles.scss';
+
+.container {
+    width: 23%;
+
+    .image {
+        background-color: styles.$secondary-color;
+        position: relative;
+        height: 383px;
+        border-radius: 4px;
+
+        .skeletonImageContent {
+            width: 100%;
+            height: 100%;
+            background-color: rgba(165, 165, 165, 0.1);
+            animation: pulse 1.5s infinite;
+        }
+
+        .addCartButton {
+            position: absolute;
+            width: 100%;
+            height: 40px;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            background-color: rgba(165, 165, 165, 0.1);
+            border-radius: 0 0 5px 5px;
+            color: transparent;
+            animation: pulse 1.5s infinite;
+        }
+
+        .discount {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 60px;
+            height: 30px;
+            border-radius: 4px;
+            background-color: rgba(165, 165, 165, 0.1);
+            color: transparent;
+            animation: pulse 1.5s infinite;
+        }
+
+        .heart {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 34px;
+            height: 34px;
+            background-color: rgba(165, 165, 165, 0.1);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+    }
+
+    .title {
+        height: 20px;
+        background-color: rgba(165, 165, 165, 0.1);
+        margin-top: 23px;
+        animation: pulse 1.5s infinite;
+    }
+
+    .priceContainer {
+        margin-top: 15px;
+        display: flex;
+
+        .newPrice {
+            height: 20px;
+            width: 50%;
+            background-color: rgba(165, 165, 165, 0.1);
+            margin-right: 12px;
+            animation: pulse 1.5s infinite;
+        }
+
+        .oldPrice {
+            height: 20px;
+            width: 30%;
+            background-color: rgba(165, 165, 165, 0.1);
+            animation: pulse 1.5s infinite;
+        }
+    }
+
+    .rateContainer {
+        display: flex;
+        margin-top: 15px;
+
+        .stars {
+            height: 15px;
+            width: 100px;
+            background-color: rgba(165, 165, 165, 0.1);
+            animation: pulse 1.5s infinite;
+        }
+
+        .rate {
+            height: 20px;
+            width: 50px;
+            margin-left: 12px;
+            background-color: rgba(165, 165, 165, 0.1);
+            animation: pulse 1.5s infinite;
+        }
+    }
+}
+
+@keyframes pulse {
+    0% {
+        background-color: rgba(165, 165, 165, 0.1);
+    }
+
+    50% {
+        background-color: rgba(165, 165, 165, 0.3);
+    }
+
+    100% {
+        background-color: rgba(165, 165, 165, 0.1);
+    }
+}

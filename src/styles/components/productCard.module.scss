@@ -66,6 +66,7 @@
     .title {
         @include styles.font-poppins-medium(16px);
         margin-top: 23px;
+        height: 20px;
     }
 
     .priceContainer {
@@ -73,6 +74,7 @@
         display: flex;
 
         .newPrice {
+            height: 20px;
             margin-right: 12px;
             color: styles.$secondary-color-2;
             @include styles.font-poppins-medium(16px);
@@ -82,6 +84,7 @@
             @include styles.font-poppins-medium(16px);
             color: styles.$text-color-2;
             opacity: 50%;
+            height: 20px;
             text-decoration: line-through;
         }
     }

@@ -8,39 +8,9 @@
     min-height: 500px;
     position: relative;
 
-
-
-    .title {
-        display: flex;
-        align-items: center;
-        color: styles.$secondary-color-2;
-        @include styles.font-poppins-semibold(16px);
-    }
-
-    .subTitle {
-        display: flex;
-        align-items: center;
+    .headerContainer {
         position: relative;
-
-        p {
-            @include styles.font-inter-semibold(36px);
-            margin-right: 87px;
-        }
-
-        .navigation {
-            position: absolute;
-            right: 0;
-            bottom: 0;
-
-            button {
-                background: none;
-                border: none;
-
-                svg {
-                    margin-left: 8px;
-                }
-            }
-        }
+        display: flex;
     }
 
     .productContainer {

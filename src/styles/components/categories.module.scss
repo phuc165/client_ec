@@ -1,0 +1,47 @@
+@use '../styles.scss';
+
+.container {
+    width: 83%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    .headerContainer {
+        position: relative;
+        display: flex;
+    }
+
+    .subcategoriesList {
+        margin-top: 60px;
+        display: flex;
+        justify-content: space-between;
+
+
+        .subcategoryItem {
+            width: 14%;
+            height: 178px;
+            background-color: styles.$primary-color;
+            border: solid rgb(0, 0, 0, 30%) 1px;
+            border-radius: 4px;
+            @include styles.font-poppins-regular(16px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            &:hover {
+                background-color: styles.$button-color-2;
+                color: styles.$primary-color;
+                border: none;
+            }
+
+            &.selected {
+                background-color: styles.$button-color-2;
+                color: styles.$primary-color;
+                border: none;
+            }
+        }
+
+
+    }
+}

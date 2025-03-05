@@ -1,0 +1,30 @@
+@use '../styles.scss';
+
+.mainTitle {
+    display: flex;
+    align-items: center;
+    color: styles.$secondary-color-2;
+    @include styles.font-poppins-semibold(16px);
+
+    .titleDecor {
+        width: 20px;
+        height: 40px;
+        border-radius: 4px;
+        background-color: styles.$secondary-color-2;
+        margin-right: 16px;
+    }
+}
+
+.subTitle {
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    p {
+        @include styles.font-inter-semibold(36px);
+        margin-right: 87px;
+        margin-bottom: 0;
+    }
+
+
+}

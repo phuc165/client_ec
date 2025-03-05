@@ -3,18 +3,18 @@ import styles from '../../styles/components/flashSale.module.scss';
 import clsx from 'clsx';
 
 import CountdownTimer from '../CountdownTimer';
-import TitleDecor from '../TitleDecor';
+import HomeTitle from '../HomeTitle';
 import ProductCard from '../ProductCard';
 import ViewAllButton from '../ViewAllButton';
-import LeftArrowButton from '../LeftArrowButton';
-import RightArrowButton from '../RightArrowButton';
+import Navigation from '../Navigation';
 import ProductCardSkeleton from '../ProductCardSkeleton';
 
-const FlashSale = () => {
+const FlashSale = ({ initLimit }) => {
     // State management
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [limit] = useState(initLimit);
     const [skip, setSkip] = useState(0);
     const [totalProducts, setTotalProducts] = useState(0);
 
@@ -26,7 +26,7 @@ const FlashSale = () => {
 
             try {
                 const response = await fetch(
-                    `https://dummyjson.com/products?limit=4&skip=${skip}&select=title,price,rating,discountPercentage,reviews,images`,
+                    `https://dummyjson.com/products?limit=${limit}&skip=${skip}&select=id,title,price,rating,discountPercentage,reviews,images`,
                 );
 
                 if (!response.ok) {
@@ -35,7 +35,6 @@ const FlashSale = () => {
 
                 const data = await response.json();
 
-                // Validate and transform product data
                 const validProducts = data.products.map((product) => ({
                     ...product,
                     discountedPrice: calculateDiscountedPrice(product.price, product.discountPercentage),
@@ -51,7 +50,7 @@ const FlashSale = () => {
         };
 
         fetchProducts();
-    }, [skip]);
+    }, [skip, limit]);
 
     // Helper function to calculate discounted price
     const calculateDiscountedPrice = (originalPrice, discountPercentage) => {
@@ -60,43 +59,30 @@ const FlashSale = () => {
 
     // Pagination handlers with safety checks
     const handleNextPage = () => {
-        if (skip + 4 < totalProducts) {
-            setSkip((prevSkip) => prevSkip + 4);
+        if (skip + limit < totalProducts) {
+            setSkip((prevSkip) => prevSkip + limit);
         }
     };
 
     const handlePrevPage = () => {
-        setSkip((prevSkip) => Math.max(0, prevSkip - 4));
+        setSkip((prevSkip) => Math.max(0, prevSkip - limit));
     };
 
     // Memoized rendering of product cards for performance
     const productCards = useMemo(
         () =>
             products.map((product) => (
-                <ProductCard
-                    key={product.id}
-                    product={{
-                        ...product,
-                        discountedPrice: calculateDiscountedPrice(product.price, product.discountPercentage),
-                    }}
-                />
+                <ProductCard key={product.id} product={product} /> // Simplified, as discountedPrice is already in product
             )),
         [products],
     );
 
     return (
         <div className={clsx(styles.container)}>
-            <div className={clsx(styles.title)}>
-                <TitleDecor />
-                Today's
-            </div>
-            <div className={clsx(styles.subTitle)}>
-                <p>Flash Sales</p>
+            <div className={clsx(styles.headerContainer)}>
+                <HomeTitle title={`Today's`} subTitle={`Flash Sales`} />
                 <CountdownTimer />
-                <div className={clsx(styles.navigation)}>
-                    <LeftArrowButton onClick={handlePrevPage} skip={skip} />
-                    <RightArrowButton onClick={handleNextPage} skip={skip} totalProducts={totalProducts} />
-                </div>
+                <Navigation limit={limit} skip={skip} totalProducts={totalProducts} onNextPage={handleNextPage} onPrevPage={handlePrevPage} />
             </div>
             <div className={clsx(styles.productContainer)}>
                 {loading ? (

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import styles from '../../styles/components/flashSale.module.scss';
 import clsx from 'clsx';
+import axios from 'axios';
 
 import CountdownTimer from '../CountdownTimer';
 import HomeTitle from '../HomeTitle';
@@ -18,33 +19,40 @@ const FlashSale = ({ initLimit }) => {
     const [skip, setSkip] = useState(0);
     const [totalProducts, setTotalProducts] = useState(0);
 
-    // Fetch products with improved error handling and data management
+    // Fetch products with axios
     useEffect(() => {
         const fetchProducts = async () => {
             setLoading(true);
             setError(null);
 
             try {
-                const response = await fetch(
-                    `https://dummyjson.com/products?limit=${limit}&skip=${skip}&select=id,title,price,rating,discountPercentage,reviews,images`,
+                const response = await axios.get(
+                    `http://localhost:3000/api/v1/product?limit=${limit}&skip=${skip}&select=id,name,image,ratings,no_of_ratings,discount_price,actual_price`,
                 );
 
-                if (!response.ok) {
-                    throw new Error('Failed to fetch products');
+                // Assuming your backend returns { success: true, message: "...", data: [...] }
+                const { data } = response.data;
+
+                if (!Array.isArray(data)) {
+                    throw new Error('Invalid data format from API');
                 }
 
-                const data = await response.json();
-
-                const validProducts = data.products.map((product) => ({
-                    ...product,
-                    discountedPrice: calculateDiscountedPrice(product.price, product.discountPercentage),
+                // Map the products to match ProductCard expectations
+                const validProducts = data.map((product) => ({
+                    id: product.id || product._id, // Handle MongoDB _id if present
+                    title: product.name, // Map 'name' to 'title' for consistency
+                    price: product.actual_price, // Original price
+                    discountedPrice: product.discount_price, // Already calculated by backend
+                    rating: product.ratings,
+                    reviews: product.no_of_ratings, // Map to reviews for consistency
+                    images: product.image, // Assuming image is a single URL or array
                 }));
 
                 setProducts(validProducts);
-                setTotalProducts(data.total);
+                setTotalProducts(response.data.total || data.length); // Adjust based on your API response
                 setLoading(false);
             } catch (err) {
-                setError(err.message);
+                setError(err.message || 'Failed to fetch products');
                 setLoading(false);
             }
         };
@@ -52,16 +60,9 @@ const FlashSale = ({ initLimit }) => {
         fetchProducts();
     }, [skip, limit]);
 
-    // Helper function to calculate discounted price
-    const calculateDiscountedPrice = (originalPrice, discountPercentage) => {
-        return ((originalPrice * (100 - discountPercentage)) / 100).toFixed(2);
-    };
-
     // Pagination handlers with safety checks
     const handleNextPage = () => {
-        if (skip + limit < totalProducts) {
-            setSkip((prevSkip) => prevSkip + limit);
-        }
+        setSkip((prevSkip) => prevSkip + limit);
     };
 
     const handlePrevPage = () => {
@@ -69,19 +70,13 @@ const FlashSale = ({ initLimit }) => {
     };
 
     // Memoized rendering of product cards for performance
-    const productCards = useMemo(
-        () =>
-            products.map((product) => (
-                <ProductCard key={product.id} product={product} /> // Simplified, as discountedPrice is already in product
-            )),
-        [products],
-    );
+    const productCards = useMemo(() => products.map((product) => <ProductCard key={product.id} product={product} />), [products]);
 
     return (
         <div className={clsx(styles.container)}>
             <div className={clsx(styles.headerContainer)}>
                 <HomeTitle title={`Today's`} subTitle={`Flash Sales`} />
-                <CountdownTimer />
+                {/* <CountdownTimer /> */}
                 <Navigation limit={limit} skip={skip} totalProducts={totalProducts} onNextPage={handleNextPage} onPrevPage={handlePrevPage} />
             </div>
             <div className={clsx(styles.productContainer)}>

@@ -8,6 +8,8 @@
         position: relative;
         height: 383px;
         border-radius: 4px;
+        display: flex;
+        justify-content: center;
 
         &:hover {
             .addCartButton {
@@ -17,7 +19,7 @@
         }
 
         img {
-            width: 100%;
+            width: 70%;
         }
 
         .addCartButton {
@@ -66,7 +68,9 @@
     .title {
         @include styles.font-poppins-medium(16px);
         margin-top: 23px;
-        height: 20px;
+        height: 48px;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .priceContainer {

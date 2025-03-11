@@ -16,14 +16,12 @@ const ProductCard = ({ product }) => {
             </div>
             <div className={clsx(styles.title)}>{product.title}</div>
             <div className={clsx(styles.priceContainer)}>
-                <div className={clsx(styles.newPrice)}>${product.price}</div>
-                <div className={clsx(styles.oldPrice)}>
-                    ${Math.round(((product.price * (100 - product.discountPercentage)) / 100 + Number.EPSILON) * 100) / 100}
-                </div>
+                <div className={clsx(styles.newPrice)}>{product.price}</div>
+                <div className={clsx(styles.oldPrice)}>{product.discountedPrice}</div>
             </div>
             <div className={clsx(styles.rateContainer)}>
                 <StarRatingDisplay rating={product.rating} />
-                <div className={clsx(styles.rate)}>({product.reviews.length})</div>
+                <div className={clsx(styles.rate)}>({product.reviews})</div>
             </div>
         </div>
     );

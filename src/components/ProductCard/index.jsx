@@ -9,15 +9,15 @@ const ProductCard = ({ product }) => {
             <div className={clsx(styles.image)}>
                 <img src={product.images} alt={product.title} />
                 <div className={clsx(styles.addCartButton)}>Add To Cart</div>
-                <div className={clsx(styles.discount)}>-{product.discountPercentage}%</div>
+                <div className={clsx(styles.discount)}>-{((product.discountedPrice / product.price) * 100).toFixed()}%</div>
                 <div className={clsx(styles.heart)}>
                     <ProductHeart />
                 </div>
             </div>
             <div className={clsx(styles.title)}>{product.title}</div>
             <div className={clsx(styles.priceContainer)}>
-                <div className={clsx(styles.newPrice)}>{product.price}</div>
-                <div className={clsx(styles.oldPrice)}>{product.discountedPrice}</div>
+                <div className={clsx(styles.newPrice)}>${product.price}</div>
+                <div className={clsx(styles.oldPrice)}>${product.discountedPrice}</div>
             </div>
             <div className={clsx(styles.rateContainer)}>
                 <StarRatingDisplay rating={product.rating} />

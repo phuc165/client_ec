@@ -1,0 +1,20 @@
+.container {
+    width: 83%;
+    margin: 140px auto 0 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 500px;
+    position: relative;
+
+    .headerContainer {
+        position: relative;
+        display: flex;
+    }
+
+    .productContainer {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 40px;
+        flex-grow: 1;
+    }
+}

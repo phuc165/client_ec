@@ -9,6 +9,7 @@ import FlashSale from '../../components/FlashSale';
 import UpperFooter from '../../components/UpperFooter';
 import HorizontalLine from '../../components/HorizontalLine';
 import Categories from '../../components/Categories';
+import BestSeller from '../../components/BestSeller';
 
 function Home() {
     const [data, setData] = useState([]);
@@ -42,6 +43,7 @@ function Home() {
             <HorizontalLine />
             <Categories categories={data} />
             <HorizontalLine />
+            <BestSeller />
             <UpperFooter />
         </div>
     );

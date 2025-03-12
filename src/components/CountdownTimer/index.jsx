@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from '../../styles/components/countdownTimer.module.scss';
 import clsx from 'clsx';
+import axios from 'axios'; // Import axios
 
-function CountdownTimer() {
+function CountdownTimer({ timerName }) {
     const [timeRemaining, setTimeRemaining] = useState({
         days: '00',
         hours: '00',
@@ -10,7 +11,7 @@ function CountdownTimer() {
         seconds: '00',
     });
     const [endTime, setEndTime] = useState(null);
-    const [isLoading, setIsLoading] = useState(false); // Initially not loading, as we check sessionStorage first
+    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const intervalRef = useRef(null);
 
@@ -19,16 +20,18 @@ function CountdownTimer() {
             setIsLoading(true);
             setError(null);
             try {
-                const response = await fetch('http://localhost:5000/api/timer-state');
-                if (!response.ok) {
+                const response = await axios.get(`http://localhost:3000/api/v1/timer/${timerName}`); // Use axios.get
+                if (response.status !== 200) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
-                const data = await response.json();
-                if (data.endTime) {
-                    sessionStorage.setItem('countdownEndTime', data.endTime); // Store in sessionStorage
-                    setEndTime(data.endTime);
+                const responseData = response.data; // Store response.data to a variable for clarity
+
+                if (responseData.success && responseData.data && responseData.data.length > 0 && responseData.data[0].endTime) {
+                    const fetchedEndTime = responseData.data[0].endTime; // Access endTime from the nested path
+                    sessionStorage.setItem('countdownEndTime', fetchedEndTime);
+                    setEndTime(fetchedEndTime);
                 } else {
-                    setError(new Error("Backend response missing 'endTime'"));
+                    setError(new Error("Backend response missing 'endTime' or incorrect data structure"));
                 }
             } catch (e) {
                 setError(e);
@@ -41,9 +44,9 @@ function CountdownTimer() {
         // Check sessionStorage first
         const storedEndTime = sessionStorage.getItem('countdownEndTime');
         if (storedEndTime) {
-            setEndTime(storedEndTime); // Use stored endTime if available
+            setEndTime(storedEndTime);
         } else {
-            fetchTimerState(); // Fetch from backend if not in sessionStorage
+            fetchTimerState();
         }
 
         return () => {
@@ -56,7 +59,7 @@ function CountdownTimer() {
     useEffect(() => {
         if (endTime) {
             intervalRef.current = setInterval(() => {
-                const calculatedTime = calculateTimeRemaining(endTime);
+                const calculatedTime = calculateTimeRemaining(endTime); // Use the calculateTimeRemaining function
                 setTimeRemaining(calculatedTime);
                 if (isTimerFinished(calculatedTime)) {
                     clearInterval(intervalRef.current);

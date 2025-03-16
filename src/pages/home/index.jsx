@@ -10,6 +10,7 @@ import UpperFooter from '../../components/UpperFooter';
 import HorizontalLine from '../../components/HorizontalLine';
 import Categories from '../../components/Categories';
 import BestSeller from '../../components/BestSeller';
+import SaleOffProduct from '../../components/SaleOffProduct';
 
 function Home() {
     const [data, setData] = useState([]);
@@ -21,7 +22,6 @@ function Home() {
             .get('http://localhost:3000/api/v1/category')
             .then(function (response) {
                 // handle success
-                console.log('home', response);
                 setData(response.data.data);
                 setLoading(false);
             })
@@ -44,6 +44,8 @@ function Home() {
             <Categories categories={data} />
             <HorizontalLine />
             <BestSeller />
+            <HorizontalLine />
+            <SaleOffProduct />
             <UpperFooter />
         </div>
     );

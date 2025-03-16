@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useCallback } from 'react'; // Added useCallback
 import styles from '../../styles/components/flashSale.module.scss';
 import clsx from 'clsx';
 import axios from 'axios';
@@ -17,59 +17,75 @@ const FlashSale = ({ initLimit }) => {
     const [error, setError] = useState(null);
     const [limit] = useState(initLimit);
     const [skip, setSkip] = useState(0);
-    const [totalProducts, setTotalProducts] = useState(0);
+    const [totalProducts, setTotalProducts] = useState(0); // Still keep totalProducts for Navigation component if needed, but logic will change
 
-    // Fetch products with axios
-    useEffect(() => {
-        const fetchProducts = async () => {
+    // Fetch products function (reusable) - using useCallback for performance optimization
+    const fetchProducts = useCallback(
+        async (currentSkip) => {
             setLoading(true);
             setError(null);
 
             try {
                 const response = await axios.get(
-                    `http://localhost:3000/api/v1/product?limit=${limit}&skip=${skip}&select=id,name,image,ratings,no_of_ratings,discount_price,actual_price`,
+                    `http://localhost:3000/api/v1/product?limit=${limit}&skip=${currentSkip}&select=id,name,image,ratings,no_of_ratings,discount_price,actual_price`,
                 );
 
-                // Assuming your backend returns { success: true, message: "...", data: [...] }
-                const { data } = response.data;
+                const { data, total } = response.data; // Destructure total - might be still useful for totalProducts state
 
                 if (!Array.isArray(data)) {
                     throw new Error('Invalid data format from API');
                 }
 
-                // Map the products to match ProductCard expectations
                 const validProducts = data.map((product) => ({
-                    id: product.id || product._id, // Handle MongoDB _id if present
-                    title: product.name, // Map 'name' to 'title' for consistency
-                    price: product.actual_price, // Original price
-                    discountedPrice: product.discount_price, // Already calculated by backend
+                    id: product.id || product._id,
+                    title: product.name,
+                    price: product.actual_price,
+                    discountedPrice: product.discount_price,
                     rating: product.ratings,
-                    reviews: product.no_of_ratings, // Map to reviews for consistency
-                    images: product.image, // Assuming image is a single URL or array
+                    reviews: product.no_of_ratings,
+                    images: product.image,
                 }));
 
-                setProducts(validProducts);
-                setTotalProducts(response.data.total || data.length); // Adjust based on your API response
+                setTotalProducts(total || 0); // Still update totalProducts if backend provides it
                 setLoading(false);
+                return validProducts; // Return the fetched products
             } catch (err) {
                 setError(err.message || 'Failed to fetch products');
                 setLoading(false);
+                return []; // Return empty array in case of error
             }
+        },
+        [limit],
+    );
+
+    // Initial fetch
+    useEffect(() => {
+        const initialLoad = async () => {
+            const initialProducts = await fetchProducts(skip);
+            setProducts(initialProducts);
         };
+        initialLoad();
+    }, [fetchProducts, skip]); // skip dependency is still needed for initial load from skip 0
 
-        fetchProducts();
-    }, [skip, limit]);
+    // Pagination handlers
+    const handleNextPage = async () => {
+        const nextSkip = skip + limit;
+        const nextProducts = await fetchProducts(nextSkip);
 
-    // Pagination handlers with safety checks
-    const handleNextPage = () => {
-        setSkip((prevSkip) => prevSkip + limit);
+        if (nextProducts.length > 0) {
+            setProducts(nextProducts); // Replace current products with next page products
+            setSkip(nextSkip);
+        } else {
+            console.log('No more products to load');
+            // Optionally disable next page button or show message to user
+        }
     };
 
     const handlePrevPage = () => {
         setSkip((prevSkip) => Math.max(0, prevSkip - limit));
     };
 
-    // Memoized rendering of product cards for performance
+    // Memoized rendering
     const productCards = useMemo(() => products.map((product) => <ProductCard key={product.id} product={product} />), [products]);
 
     return (
@@ -77,7 +93,8 @@ const FlashSale = ({ initLimit }) => {
             <div className={clsx(styles.headerContainer)}>
                 <HomeTitle title={`Today's`} subTitle={`Flash Sales`} />
                 <CountdownTimer timerName='flash sale timer' />
-                <Navigation limit={limit} skip={skip} totalProducts={totalProducts} onNextPage={handleNextPage} onPrevPage={handlePrevPage} />
+                <Navigation limit={limit} skip={skip} totalProducts={totalProducts} onNextPage={handleNextPage} onPrevPage={handlePrevPage} />{' '}
+                {/* totalProducts might not be fully accurate anymore */}
             </div>
             <div className={clsx(styles.productContainer)}>
                 {loading ? (

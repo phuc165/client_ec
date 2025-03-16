@@ -4,24 +4,36 @@ import StarRatingDisplay from '../StarRatingDisplay';
 import ProductHeart from '../../assets/svg/ProductHeart';
 
 const ProductCard = ({ product }) => {
+    // Calculate discount percentage
+    const discountPercentage = ((1 - product.discountedPrice / product.price) * 100).toFixed();
+
     return (
-        <div className={clsx(styles.container)}>
-            <div className={clsx(styles.image)}>
+        <div className={styles.container}>
+            {/* Product image with overlay elements */}
+            <div className={styles.image}>
                 <img src={product.images} alt={product.title} />
-                <div className={clsx(styles.addCartButton)}>Add To Cart</div>
-                <div className={clsx(styles.discount)}>-{((product.discountedPrice / product.price) * 100).toFixed()}%</div>
-                <div className={clsx(styles.heart)}>
+
+                {/* Action buttons and badges */}
+                <div className={styles.addCartButton}>Add To Cart</div>
+                <div className={styles.discount}>-{discountPercentage}%</div>
+                <div className={styles.heart}>
                     <ProductHeart />
                 </div>
             </div>
-            <div className={clsx(styles.title)}>{product.title}</div>
-            <div className={clsx(styles.priceContainer)}>
-                <div className={clsx(styles.newPrice)}>${product.price}</div>
-                <div className={clsx(styles.oldPrice)}>${product.discountedPrice}</div>
+
+            {/* Product information */}
+            <div className={styles.title}>{product.title}</div>
+
+            {/* Price information */}
+            <div className={styles.priceContainer}>
+                <div className={styles.newPrice}>${product.price}</div>
+                <div className={styles.oldPrice}>${product.discountedPrice}</div>
             </div>
-            <div className={clsx(styles.rateContainer)}>
+
+            {/* Rating information */}
+            <div className={styles.rateContainer}>
                 <StarRatingDisplay rating={product.rating} />
-                <div className={clsx(styles.rate)}>({product.reviews})</div>
+                <div className={styles.rate}>({product.reviews})</div>
             </div>
         </div>
     );

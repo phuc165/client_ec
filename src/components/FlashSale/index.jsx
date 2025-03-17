@@ -3,7 +3,7 @@ import styles from '../../styles/components/flashSale.module.scss';
 import clsx from 'clsx';
 import axios from 'axios';
 
-import CountdownTimer from '../CountdownTimer';
+import Timer from '../Timer';
 import HomeTitle from '../HomeTitle';
 import ProductCard from '../ProductCard';
 import ViewAllButton from '../ViewAllButton';
@@ -92,7 +92,7 @@ const FlashSale = ({ initLimit }) => {
         <div className={clsx(styles.container)}>
             <div className={clsx(styles.headerContainer)}>
                 <HomeTitle title={`Today's`} subTitle={`Flash Sales`} />
-                <CountdownTimer timerName='flash sale timer' />
+                <Timer timerName='flash sale timer' styleType='flash-sale' />
                 <Navigation limit={limit} skip={skip} totalProducts={totalProducts} onNextPage={handleNextPage} onPrevPage={handlePrevPage} />{' '}
                 {/* totalProducts might not be fully accurate anymore */}
             </div>

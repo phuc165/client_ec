@@ -1,0 +1,68 @@
+@use '../styles.scss';
+
+.timer {
+
+    display: flex;
+
+    &.flash-sale {
+        width: 26%;
+        justify-content: space-between;
+
+        .timerUnit {
+            display: flex;
+            align-items: flex-end;
+
+            .subContainer {
+                display: flex;
+                flex-direction: column;
+
+                .timerLabel {
+                    @include styles.font-poppins-medium(12px);
+                }
+
+                .timerValue {
+                    @include styles.font-inter-bold(32px);
+                }
+            }
+
+
+        }
+
+        .dauHaiCham {
+            display: flex;
+            align-items: flex-end;
+            color: styles.$button-hover;
+            @include styles.font-inter-bold(32px);
+
+            &:last-child {
+                display: none;
+            }
+        }
+    }
+
+    &.sale-off {
+        gap: 1rem;
+        margin-bottom: 2rem;
+
+        .timerUnit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #fff;
+            color: #000;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            text-align: center;
+
+            .timerValue {
+                @include styles.font-poppins-semibold(16px);
+            }
+
+            .timerLabel {
+                @include styles.font-poppins-regular(11px);
+            }
+        }
+    }
+}

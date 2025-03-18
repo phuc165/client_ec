@@ -1,6 +1,8 @@
+@use '../styles.scss';
+
 .container {
     width: 83%;
-    margin: 0 auto 0 auto;
+    margin: auto;
     display: flex;
     flex-direction: column;
     min-height: 500px;
@@ -15,6 +17,7 @@
 
     .productContainer {
         display: flex;
+        flex-wrap: wrap;
         justify-content: space-between;
         flex-grow: 1;
     }

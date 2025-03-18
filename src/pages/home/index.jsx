@@ -11,6 +11,8 @@ import HorizontalLine from '../../components/HorizontalLine';
 import Categories from '../../components/Categories';
 import BestSeller from '../../components/BestSeller';
 import SaleOffProduct from '../../components/SaleOffProduct';
+import ExploreProduct from '../../components/ExploreProduct';
+import ProductShowcase from '../../components/ProductShowcase';
 
 function Home() {
     const [data, setData] = useState([]);
@@ -46,6 +48,10 @@ function Home() {
             <BestSeller />
             <HorizontalLine />
             <SaleOffProduct />
+            <HorizontalLine />
+            <ExploreProduct initLimit={8} />
+            <HorizontalLine />
+            <ProductShowcase />
             <UpperFooter />
         </div>
     );

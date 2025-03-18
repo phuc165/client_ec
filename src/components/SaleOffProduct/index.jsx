@@ -23,7 +23,10 @@ function SaleOffProduct() {
             <div className={styles.productSide}>
                 <div className={styles.blurBackground}></div>
                 <div className={styles.productImage}>
-                    <img src='/path-to-jbl-speaker.png' alt='JBL Speaker' />
+                    <img
+                        src='https://vn.jbl.com/dw/image/v2/AAUJ_PRD/on/demandware.static/-/Sites-masterCatalog_Harman/default/dw2ca96ffd/JBL_BOOMBOX_2_FRONT_004%20MAIN_x2.png?sw=537&sfrm=png'
+                        alt='JBL Speaker'
+                    />
                 </div>
             </div>
         </div>

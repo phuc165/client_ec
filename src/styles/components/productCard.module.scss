@@ -2,14 +2,16 @@
 
 .container {
     width: 23%;
+    margin-bottom: 50px;
 
     .image {
         background-color: styles.$secondary-color;
         position: relative;
-        height: 383px;
+        height: 300px;
         border-radius: 4px;
         display: flex;
         justify-content: center;
+        align-items: center;
 
         &:hover {
             .addCartButton {
@@ -19,7 +21,10 @@
         }
 
         img {
-            width: 70%;
+            max-width: 90%;
+            max-height: 90%;
+            margin: auto;
+            object-fit: contain;
         }
 
         .addCartButton {

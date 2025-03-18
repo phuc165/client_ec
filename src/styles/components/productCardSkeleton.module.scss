@@ -2,18 +2,22 @@
 
 .container {
     width: 23%;
+    margin-bottom: 50px;
 
     .image {
         background-color: styles.$secondary-color;
         position: relative;
-        height: 383px;
+        height: 300px;
         border-radius: 4px;
 
         .skeletonImageContent {
-            width: 100%;
-            height: 100%;
+
             background-color: rgba(165, 165, 165, 0.1);
             animation: pulse 1.5s infinite;
+            width: 90%;
+            height: 90%;
+            margin: auto;
+            object-fit: contain;
         }
 
         .addCartButton {

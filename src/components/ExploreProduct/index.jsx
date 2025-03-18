@@ -1,17 +1,14 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react'; // Added useCallback
-import styles from '../../styles/components/flashSale.module.scss';
+import styles from '../../styles/components/exploreProduct.module.scss';
 import clsx from 'clsx';
 import axios from 'axios';
 
-import Timer from '../Timer';
 import HomeTitle from '../HomeTitle';
 import ProductCard from '../ProductCard';
 import ViewAllButton from '../ViewAllButton';
 import Navigation from '../Navigation';
 import ProductCardSkeleton from '../ProductCardSkeleton';
-
-const FlashSale = ({ initLimit }) => {
-    // State management
+function ExploreProduct({ initLimit }) {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -84,19 +81,23 @@ const FlashSale = ({ initLimit }) => {
     const handlePrevPage = () => {
         setSkip((prevSkip) => Math.max(0, prevSkip - limit));
     };
+
     // Memoized rendering
     const productCards = useMemo(() => products.map((product) => <ProductCard key={product.id} product={product} />), [products]);
     return (
         <div className={clsx(styles.container)}>
             <div className={clsx(styles.headerContainer)}>
-                <HomeTitle title={`Today's`} subTitle={`Flash Sales`} />
-                <Timer timerName='flash sale timer' styleType='flash-sale' />
+                <HomeTitle title={`Our Products`} subTitle={`Explore Our Products`} />
                 <Navigation limit={limit} skip={skip} totalProducts={totalProducts} onNextPage={handleNextPage} onPrevPage={handlePrevPage} />{' '}
                 {/* totalProducts might not be fully accurate anymore */}
             </div>
             <div className={clsx(styles.productContainer)}>
                 {loading ? (
                     <>
+                        <ProductCardSkeleton />
+                        <ProductCardSkeleton />
+                        <ProductCardSkeleton />
+                        <ProductCardSkeleton />
                         <ProductCardSkeleton />
                         <ProductCardSkeleton />
                         <ProductCardSkeleton />
@@ -118,6 +119,6 @@ const FlashSale = ({ initLimit }) => {
             <ViewAllButton content='View All Products' page='homeFlashSale' />
         </div>
     );
-};
+}
 
-export default FlashSale;
+export default ExploreProduct;

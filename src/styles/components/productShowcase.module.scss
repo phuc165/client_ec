@@ -1,4 +1,5 @@
-// ProductShowcase.module.scss
+@use '../styles.scss';
+
 .container {
     width: 83%;
     margin: auto;
@@ -69,13 +70,12 @@
 }
 
 .productTitle {
-    font-size: 24px;
-    font-weight: 600;
+    @include styles.font-inter-semibold(24px);
     margin-bottom: 5px;
 }
 
 .productDescription {
-    font-size: 14px;
+    @include styles.font-poppins-regular(14px);
     margin-bottom: 15px;
     opacity: 0.8;
 }
@@ -85,8 +85,7 @@
     color: #fff;
     border: none;
     padding: 8px 0;
-    font-size: 14px;
-    font-weight: 600;
+    @include styles.font-poppins-medium(16px);
     cursor: pointer;
     position: relative;
     text-align: left;

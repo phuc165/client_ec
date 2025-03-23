@@ -1,0 +1,77 @@
+@use '../styles.scss';
+
+.container {
+    width: 83.5%;
+    margin-top: 60px;
+    margin-bottom: 140px;
+    display: flex;
+    justify-content: space-between;
+
+
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        width: 30%;
+        margin-top: 126px;
+
+        .title {
+            @include styles.font-inter-medium(36px);
+        }
+
+        .subTitle {
+            margin-top: 35px;
+            @include styles.font-poppins-regular(16px);
+        }
+
+        form {
+            margin-top: 50px;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 35px;
+
+            input {
+                height: 40px;
+                margin-bottom: 45px;
+                border-left: none;
+                border-top: none;
+                border-right: none;
+                border-bottom: solid rgba(0, 0, 0, 0.5) 1px;
+
+                &::placeholder {
+                    @include styles.font-poppins-regular(16px);
+                    opacity: 40%;
+                }
+            }
+
+            .buttonContainer {
+                display: flex;
+                justify-content: space-between;
+
+                .createAcc {
+                    width: 40%;
+                    height: 60px;
+                    background-color: styles.$button-color-2;
+                    @include styles.font-poppins-regular(16px);
+                    color: styles.$text-color;
+                    border-radius: 4px;
+
+                    &:hover {
+                        background-color: styles.$button-hover;
+                    }
+                }
+
+                .forgetPass {
+                    display: flex;
+                    align-items: center;
+                    @include styles.font-poppins-regular(16px);
+                    color: styles.$secondary-color-2;
+                    text-decoration: none;
+
+                }
+            }
+
+
+        }
+    }
+}

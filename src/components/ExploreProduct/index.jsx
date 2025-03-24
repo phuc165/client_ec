@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useCallback } from 'react'; // Added useCallback
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import styles from '../../styles/components/exploreProduct.module.scss';
 import clsx from 'clsx';
 import axios from 'axios';

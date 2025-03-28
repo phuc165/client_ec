@@ -1,3 +1,5 @@
+import { HomeLayout } from '../layouts';
+
 import Home from '../pages/home';
 import About from '../pages/about';
 import Account from '../pages/account';
@@ -11,7 +13,7 @@ import Signup from '../pages/signup';
 import Whislist from '../pages/whislist';
 
 const publicRoutes = [
-    { path: '/', Component: Home },
+    { path: '/', Component: Home, layout: HomeLayout },
     { path: '/about', Component: About },
     { path: '/account', Component: Account },
     { path: '/cart', Component: Cart },

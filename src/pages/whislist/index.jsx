@@ -82,21 +82,18 @@ function Whislist() {
     };
 
     // Memoized rendering
-    const productCards = useMemo(() => products.map((product) => <ProductCard key={product.id} product={product} />), [products]);
+    const productCards = useMemo(() => products.map((product) => <ProductCard key={product.id} product={product} isWishlist={true} />), [products]);
     return (
         <div className={clsx(styles.container)}>
             <div className={clsx(styles.whislistContainer)}>
                 <div className={clsx(styles.headerContainer)}>
-                    <div>
+                    <div className={clsx(styles.title)}>
                         Wishlist <span>(4)</span>
                     </div>
-                    <Navigation
-                        limit={limit}
-                        skip={skip}
-                        totalProducts={totalProducts}
-                        onNextPage={handleNextPage}
-                        onPrevPage={handlePrevPage}
-                    />{' '}
+                    <button className={clsx(styles.moveToBag)}>Move All To Bag</button>
+                </div>
+                <div className={clsx(styles.navigation)}>
+                    <Navigation limit={limit} skip={skip} totalProducts={totalProducts} onNextPage={handleNextPage} onPrevPage={handlePrevPage} />
                 </div>
 
                 <div className={clsx(styles.productContainer)}>

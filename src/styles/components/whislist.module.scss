@@ -15,11 +15,32 @@
         width: 100%;
         flex-direction: column;
 
+        position: relative;
+
         .headerContainer {
-            div {
+            height: 60px;
+            margin-bottom: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .title {
                 @include styles.font-poppins-regular(20px);
-                margin-bottom: 60px;
+
             }
+
+            .moveToBag {
+                width: 20%;
+                height: 60px;
+                border: 1.5px solid rgba(0, 0, 0, 0.5);
+                border-radius: 4px;
+                @include styles.font-poppins-medium(16px);
+                float: right;
+            }
+        }
+
+        .navigation {
+            position: relative;
         }
 
         .spacing {

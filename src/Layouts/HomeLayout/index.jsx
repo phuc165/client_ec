@@ -1,13 +1,11 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ToTopButton from '../components/ToTopButton';
-import Breadcrumb from '../../components/Breadcrumbs';
 
-function DefaultLayout({ children }) {
+function HomeLayout({ children }) {
     return (
         <>
             <Header />
-            <Breadcrumb />
             <>{children}</>
             <ToTopButton />
             <Footer />
@@ -15,4 +13,4 @@ function DefaultLayout({ children }) {
     );
 }
 
-export default DefaultLayout;
+export default HomeLayout;

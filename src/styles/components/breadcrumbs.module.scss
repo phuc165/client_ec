@@ -1,0 +1,38 @@
+@use '../styles.scss';
+
+.breadcrumb {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    @include styles.font-poppins-regular(14px);
+
+    &__item {
+        display: flex;
+        align-items: center;
+        color: styles.$text-color-2;
+
+        &:not(:last-child) {
+            opacity: 0.5;
+        }
+
+        &:last-child &__separator {
+            display: none;
+        }
+    }
+
+    &__link {
+        text-decoration: none;
+        color: styles.$text-color-2;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    &__separator {
+        margin: 0 8px;
+        color: styles.$text-color-2;
+    }
+}

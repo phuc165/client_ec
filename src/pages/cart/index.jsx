@@ -1,4 +1,4 @@
-import styles from '../../styles/components/cart.module.scss';
+import styles from '../../styles/core/cart.module.scss';
 import clsx from 'clsx';
 
 function Cart() {

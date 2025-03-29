@@ -1,4 +1,4 @@
-import styles from '../../styles/components/checkOut.module.scss';
+import styles from '../../styles/core/checkOut.module.scss';
 import clsx from 'clsx';
 
 function CheckOut() {

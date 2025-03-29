@@ -3,7 +3,7 @@ import { useState } from 'react';
 //routing import
 import { BrowserRouter, Routes, Route } from 'react-router';
 import { publicRoutes } from './routes';
-import { DefaultLayout } from './Layouts';
+import { DefaultLayout } from './layouts';
 import { Fragment } from 'react';
 
 import './styles/app.scss';

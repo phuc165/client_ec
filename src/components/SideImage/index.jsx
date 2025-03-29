@@ -1,4 +1,4 @@
-import styles from '../../styles/components/sideImage.module.scss';
+import styles from '../../styles/core/sideImage.module.scss';
 import clsx from 'clsx';
 function SideImage() {
     return (

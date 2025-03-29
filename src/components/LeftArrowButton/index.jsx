@@ -1,4 +1,4 @@
-import styles from '../../styles/components/leftArrowButton.module.scss';
+import styles from '../../styles/core/leftArrowButton.module.scss';
 import clsx from 'clsx';
 import LeftArrow from '../../assets/svg/LeftArrow';
 

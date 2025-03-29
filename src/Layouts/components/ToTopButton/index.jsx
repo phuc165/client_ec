@@ -1,4 +1,4 @@
-import styles from '../../../styles/components/toTopArrow.module.scss';
+import styles from '../../../styles/core/toTopArrow.module.scss';
 import clsx from 'clsx';
 import UpArrow from '../../../assets/svg/UpArrow';
 

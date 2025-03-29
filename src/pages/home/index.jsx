@@ -1,4 +1,4 @@
-import styles from '../../styles/components/home.module.scss';
+import styles from '../../styles/core/home.module.scss';
 import clsx from 'clsx';
 import { useState, useEffect } from 'react';
 import axios from 'axios';

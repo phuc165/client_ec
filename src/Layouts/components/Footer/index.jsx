@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import styles from '../../../styles/components/footer.module.scss';
+import styles from '../../../styles/core/footer.module.scss';
 import clsx from 'clsx';
 
 import Ggbadge from '../../../assets/svg/Ggbadge.jsx';

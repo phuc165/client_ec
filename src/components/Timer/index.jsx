@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import clsx from 'clsx';
-import styles from '../../styles/components/timer.module.scss';
+import styles from '../../styles/core/timer.module.scss';
 
 function Timer({ timerName, styleType }) {
     const [timeLeft, setTimeLeft] = useState({
@@ -73,15 +73,15 @@ function Timer({ timerName, styleType }) {
             {styleType === 'flash-sale' ? (
                 <div className={clsx(styles.timer, styles[styleType])}>
                     {timeUnits.map((unit) => (
-                        <>
-                            <div key={unit.key} className={styles.timerUnit}>
+                        <React.Fragment key={unit.key}>
+                            <div className={styles.timerUnit}>
                                 <div className={styles.subContainer}>
                                     <span className={styles.timerLabel}>{unit.label}</span>
                                     <span className={styles.timerValue}>{unit.value}</span>
                                 </div>
                             </div>
                             <span className={styles.dauHaiCham}>:</span>
-                        </>
+                        </React.Fragment>
                     ))}
                 </div>
             ) : 'sale-off' ? (

@@ -1,4 +1,4 @@
-import styles from '../../styles/components/navigation.module.scss';
+import styles from '../../styles/core/navigation.module.scss';
 import clsx from 'clsx';
 
 import LeftArrowButton from '../LeftArrowButton';

@@ -1,4 +1,4 @@
-import styles from '../../styles/components/categories.module.scss';
+import styles from '../../styles/core/categories.module.scss';
 import clsx from 'clsx';
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';

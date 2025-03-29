@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import clsx from 'clsx';
-import styles from '../../styles/components/category.module.scss';
+import styles from '../../styles/core/category.module.scss';
 import { Link } from 'react-router';
 
 const Category = ({ categories = [] }) => {

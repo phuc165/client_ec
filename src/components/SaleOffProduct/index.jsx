@@ -1,4 +1,4 @@
-import styles from '../../styles/components/saleOffProduct.module.scss';
+import styles from '../../styles/core/saleOffProduct.module.scss';
 import clsx from 'clsx';
 import { useState, useEffect } from 'react';
 import axios from 'axios';

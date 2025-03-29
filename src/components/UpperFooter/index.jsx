@@ -1,4 +1,4 @@
-import styles from '../../styles/components/upperFooter.module.scss';
+import styles from '../../styles/core/upperFooter.module.scss';
 import clsx from 'clsx';
 
 const UpperFooter = () => {

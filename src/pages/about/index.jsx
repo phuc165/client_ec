@@ -1,4 +1,4 @@
-import styles from '../../styles/components/about.module.scss';
+import styles from '../../styles/core/about.module.scss';
 import clsx from 'clsx';
 
 function About() {

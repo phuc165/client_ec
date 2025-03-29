@@ -1,4 +1,4 @@
-import styles from '../../styles/components/login.module.scss';
+import styles from '../../styles/core/login.module.scss';
 import clsx from 'clsx';
 import { Link } from 'react-router';
 

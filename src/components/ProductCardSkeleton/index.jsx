@@ -1,4 +1,4 @@
-import styles from '../../styles/components/productCardSkeleton.module.scss';
+import styles from '../../styles/core/productCardSkeleton.module.scss';
 import clsx from 'clsx';
 
 const ProductCardSkeleton = () => {

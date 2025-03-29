@@ -1,4 +1,4 @@
-import styles from '../../styles/components/error404.module.scss';
+import styles from '../../styles/core/error404.module.scss';
 import clsx from 'clsx';
 
 function Error404() {

@@ -1,4 +1,4 @@
-import styles from '../../styles/components/signup.module.scss';
+import styles from '../../styles/core/signup.module.scss';
 import clsx from 'clsx';
 import { Link } from 'react-router';
 

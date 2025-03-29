@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react'; // Added useCallback
-import styles from '../../styles/components/productShowcase.module.scss';
+import styles from '../../styles/core/productShowcase.module.scss';
 import clsx from 'clsx';
 import axios from 'axios';
 

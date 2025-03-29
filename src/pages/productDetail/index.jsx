@@ -1,4 +1,4 @@
-import styles from '../../styles/components/productDetail.module.scss';
+import styles from '../../styles/core/productDetail.module.scss';
 import clsx from 'clsx';
 
 function ProductDetail() {

@@ -1,4 +1,4 @@
-import styles from '../../styles/components/productCard.module.scss';
+import styles from '../../styles/core/productCard.module.scss';
 import clsx from 'clsx';
 import StarRatingDisplay from '../StarRatingDisplay';
 import ProductHeart from '../../assets/svg/ProductHeart';

@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router';
 import { useState, useRef, useEffect } from 'react';
-import styles from '../../../styles/components/header.module.scss';
+import styles from '../../../styles/core/header.module.scss';
 import clsx from 'clsx';
 
 import Search from '../../../assets/svg/Search';

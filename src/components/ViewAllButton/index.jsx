@@ -1,4 +1,4 @@
-import styles from '../../styles/components/viewAllButton.module.scss';
+import styles from '../../styles/core/viewAllButton.module.scss';
 import clsx from 'clsx';
 
 const ViewAllButton = ({ content, page, className, ...prop }) => {

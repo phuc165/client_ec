@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router';
-import styles from '../../styles/components/breadcrumbs.module.scss';
+import styles from '../../styles/core/breadcrumbs.module.scss';
 import clsx from 'clsx';
 
 const Breadcrumb = () => {

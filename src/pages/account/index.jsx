@@ -1,4 +1,4 @@
-import styles from '../../styles/components/account.module.scss';
+import styles from '../../styles/core/account.module.scss';
 import clsx from 'clsx';
 
 function Account() {

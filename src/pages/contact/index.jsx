@@ -1,4 +1,4 @@
-import styles from '../../styles/components/contact.module.scss';
+import styles from '../../styles/core/contact.module.scss';
 import clsx from 'clsx';
 
 function Contact() {

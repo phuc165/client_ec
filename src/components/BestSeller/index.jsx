@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import styles from '../../styles/components/bestSeller.module.scss';
+import styles from '../../styles/core/bestSeller.module.scss';
 import clsx from 'clsx';
 import axios from 'axios';
 

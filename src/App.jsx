@@ -5,38 +5,42 @@ import { BrowserRouter, Routes, Route } from 'react-router';
 import { publicRoutes } from './routes';
 import { DefaultLayout } from './layouts';
 import { Fragment } from 'react';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
 
 import './styles/app.scss';
 function App() {
     return (
-        <BrowserRouter>
-            <Routes>
-                {publicRoutes.map((route, index) => {
-                    const Page = route.Component;
+        <Provider store={store}>
+            <BrowserRouter>
+                <Routes>
+                    {publicRoutes.map((route, index) => {
+                        const Page = route.Component;
 
-                    let Layout = DefaultLayout;
-                    if (route.layout) {
-                        Layout = route.layout;
-                    } else if (route.layout === null) {
-                        Layout = Fragment;
-                    }
+                        let Layout = DefaultLayout;
+                        if (route.layout) {
+                            Layout = route.layout;
+                        } else if (route.layout === null) {
+                            Layout = Fragment;
+                        }
 
-                    const Element = route.admin ? withAdminAuth(Page) : Page;
+                        const Element = route.admin ? withAdminAuth(Page) : Page;
 
-                    return (
-                        <Route
-                            key={index}
-                            path={route.path}
-                            element={
-                                <Layout>
-                                    <Element />
-                                </Layout>
-                            }
-                        />
-                    );
-                })}
-            </Routes>
-        </BrowserRouter>
+                        return (
+                            <Route
+                                key={index}
+                                path={route.path}
+                                element={
+                                    <Layout>
+                                        <Element />
+                                    </Layout>
+                                }
+                            />
+                        );
+                    })}
+                </Routes>
+            </BrowserRouter>
+        </Provider>
     );
 }
 

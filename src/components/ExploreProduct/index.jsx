@@ -1,89 +1,56 @@
-import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import React, { useEffect, useMemo, useCallback, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts } from '../../redux/slices/productSlice'; // Ensure the correct path
 import styles from '../../styles/core/exploreProduct.module.scss';
 import clsx from 'clsx';
-import axios from 'axios';
-
 import HomeTitle from '../HomeTitle';
 import ProductCard from '../ProductCard';
 import ViewAllButton from '../ViewAllButton';
 import Navigation from '../Navigation';
 import ProductCardSkeleton from '../ProductCardSkeleton';
+
 function ExploreProduct({ initLimit }) {
-    const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const dispatch = useDispatch();
+    const { products, loading, error, totalProducts } = useSelector((state) => state.products);
     const [limit] = useState(initLimit);
     const [skip, setSkip] = useState(0);
-    const [totalProducts, setTotalProducts] = useState(0); // Still keep totalProducts for Navigation component if needed, but logic will change
 
-    // Fetch products function (reusable) - using useCallback for performance optimization
-    const fetchProducts = useCallback(
-        async (currentSkip) => {
-            setLoading(true);
-            setError(null);
-
-            try {
-                const response = await axios.get(
-                    `http://localhost:3000/api/v1/product?limit=${limit}&skip=${currentSkip}&select=id,name,image,ratings,no_of_ratings,discount_price,actual_price`,
-                );
-
-                const { data, total } = response.data; // Destructure total - might be still useful for totalProducts state
-
-                if (!Array.isArray(data)) {
-                    throw new Error('Invalid data format from API');
-                }
-
-                const validProducts = data.map((product) => ({
-                    id: product.id || product._id,
-                    title: product.name,
-                    price: product.actual_price,
-                    discountedPrice: product.discount_price,
-                    rating: product.ratings,
-                    reviews: product.no_of_ratings,
-                    images: product.image,
-                }));
-
-                setTotalProducts(total || 0); // Still update totalProducts if backend provides it
-                setLoading(false);
-                return validProducts; // Return the fetched products
-            } catch (err) {
-                setError(err.message || 'Failed to fetch products');
-                setLoading(false);
-                return []; // Return empty array in case of error
-            }
-        },
-        [limit],
-    );
-
-    // Initial fetch
     useEffect(() => {
-        const initialLoad = async () => {
-            const initialProducts = await fetchProducts(skip);
-            setProducts(initialProducts);
-        };
-        initialLoad();
-    }, [fetchProducts, skip]); // skip dependency is still needed for initial load from skip 0
+        dispatch(fetchProducts({ limit, skip }));
+    }, [dispatch, limit, skip]);
 
-    // Pagination handlers
-    const handleNextPage = async () => {
+    const handleNextPage = useCallback(() => {
         const nextSkip = skip + limit;
-        const nextProducts = await fetchProducts(nextSkip);
+        dispatch(fetchProducts({ limit, skip: nextSkip }));
+        setSkip(nextSkip);
+    }, [dispatch, limit, skip]);
 
-        if (nextProducts.length > 0) {
-            setProducts(nextProducts); // Replace current products with next page products
-            setSkip(nextSkip);
-        } else {
-            console.log('No more products to load');
-            // Optionally disable next page button or show message to user
-        }
-    };
-
-    const handlePrevPage = () => {
+    const handlePrevPage = useCallback(() => {
         setSkip((prevSkip) => Math.max(0, prevSkip - limit));
-    };
+    }, [limit]);
 
-    // Memoized rendering
-    const productCards = useMemo(() => products.map((product) => <ProductCard key={product.id} product={product} />), [products]);
+    const skeletonCards = useMemo(() => {
+        return Array(limit)
+            .fill(null)
+            .map((_, index) => <ProductCardSkeleton key={index} />);
+    }, [limit]);
+
+    const productCards = useMemo(() => {
+        if (loading) {
+            return skeletonCards;
+        }
+
+        if (error) {
+            return <div>Error: {error}</div>;
+        }
+
+        if (products.length === 0) {
+            return <div>No products available</div>;
+        }
+
+        return products.map((product) => <ProductCard key={product.id} product={product} />);
+    }, [loading, error, products, skeletonCards]);
+
     return (
         <div className={clsx(styles.container)}>
             <div className={clsx(styles.headerContainer)}>

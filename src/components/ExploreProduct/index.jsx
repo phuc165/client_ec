@@ -16,12 +16,12 @@ function ExploreProduct({ initLimit }) {
     const [skip, setSkip] = useState(0);
 
     useEffect(() => {
-        dispatch(fetchProducts({ limit, skip }));
+        dispatch(fetchProducts({ limit, skip, type: 'explore' }));
     }, [dispatch, limit, skip]);
 
     const handleNextPage = useCallback(() => {
         const nextSkip = skip + limit;
-        dispatch(fetchProducts({ limit, skip: nextSkip }));
+        dispatch(fetchProducts({ limit, skip: nextSkip, type: 'explore' }));
         setSkip(nextSkip);
     }, [dispatch, limit, skip]);
 
@@ -36,20 +36,20 @@ function ExploreProduct({ initLimit }) {
     }, [limit]);
 
     const productCards = useMemo(() => {
-        if (loading) {
+        if (loading.explore) {
             return skeletonCards;
         }
 
-        if (error) {
-            return <div>Error: {error}</div>;
+        if (error.explore) {
+            return <div>Error: {error.explore}</div>;
         }
 
-        if (products.length === 0) {
+        if (products.explore.length === 0) {
             return <div>No products available</div>;
         }
 
-        return products.map((product) => <ProductCard key={product._id} product={product} />);
-    }, [loading, error, products, skeletonCards]);
+        return products.explore.map((product) => <ProductCard key={product._id} product={product} />);
+    }, [loading.explore, error.explore, products.explore, skeletonCards]);
 
     return (
         <div className={clsx(styles.container)}>
@@ -59,14 +59,14 @@ function ExploreProduct({ initLimit }) {
                 {/* totalProducts might not be fully accurate anymore */}
             </div>
             <div className={clsx(styles.productContainer)}>
-                {loading ? (
+                {loading.explore ? (
                     skeletonCards
-                ) : error ? (
+                ) : error.explore ? (
                     <div className={styles.errorContainer}>
-                        <p>Error: {error}</p>
+                        <p>Error: {error.explore}</p>
                         <button onClick={() => window.location.reload()}>Try Again</button>
                     </div>
-                ) : products.length > 0 ? (
+                ) : products.explore.length > 0 ? (
                     productCards
                 ) : (
                     <div className={styles.noProductsContainer}>

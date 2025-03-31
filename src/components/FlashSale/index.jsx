@@ -18,12 +18,12 @@ const FlashSale = ({ initLimit }) => {
     const [skip, setSkip] = useState(0);
 
     useEffect(() => {
-        dispatch(fetchProducts({ limit, skip }));
+        dispatch(fetchProducts({ limit, skip, type: 'flashSale' }));
     }, [dispatch, limit, skip]);
 
     const handleNextPage = useCallback(() => {
         const nextSkip = skip + limit;
-        dispatch(fetchProducts({ limit, skip: nextSkip }));
+        dispatch(fetchProducts({ limit, skip: nextSkip, type: 'flashSale' }));
         setSkip(nextSkip);
     }, [dispatch, limit, skip]);
 
@@ -38,21 +38,20 @@ const FlashSale = ({ initLimit }) => {
     }, [limit]);
 
     const productCards = useMemo(() => {
-        if (loading) {
+        if (loading.flashSale) {
             return skeletonCards;
         }
 
-        if (error) {
-            return <div>Error: {error}</div>;
+        if (error.flashSale) {
+            return <div>Error: {error.flashSale}</div>;
         }
 
-        if (products.length === 0) {
+        if (products.flashSale.length === 0) {
             return <div>No products available</div>;
         }
 
-        return products.map((product) => <ProductCard key={product._id} product={product} />);
-    }, [loading, error, products, skeletonCards]);
-
+        return products.flashSale.map((product) => <ProductCard key={product._id} product={product} />);
+    }, [loading.flashSale, error.flashSale, products.flashSale, skeletonCards]);
     return (
         <div className={clsx(styles.container)}>
             <div className={clsx(styles.headerContainer)}>
@@ -62,19 +61,14 @@ const FlashSale = ({ initLimit }) => {
                 {/* totalProducts might not be fully accurate anymore */}
             </div>
             <div className={clsx(styles.productContainer)}>
-                {loading ? (
-                    <>
-                        <ProductCardSkeleton />
-                        <ProductCardSkeleton />
-                        <ProductCardSkeleton />
-                        <ProductCardSkeleton />
-                    </>
-                ) : error ? (
+                {loading.flashSale ? (
+                    skeletonCards
+                ) : error.flashSale ? (
                     <div className={styles.errorContainer}>
-                        <p>Error: {error}</p>
+                        <p>Error: {error.flashSale}</p>
                         <button onClick={() => window.location.reload()}>Try Again</button>
                     </div>
-                ) : products.length > 0 ? (
+                ) : products.flashSale.length > 0 ? (
                     productCards
                 ) : (
                     <div className={styles.noProductsContainer}>

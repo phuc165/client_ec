@@ -73,18 +73,7 @@ function Categories({ categories = [] }) {
                     throw new Error('Invalid data format from API');
                 }
 
-                // Map the products to match ProductCard expectations
-                const validProducts = data.map((product) => ({
-                    id: product.id || product._id, // Handle MongoDB _id if present
-                    title: product.name, // Map 'name' to 'title' for consistency
-                    price: product.actual_price, // Original price
-                    discountedPrice: product.discount_price, // Already calculated by backend
-                    rating: product.ratings,
-                    reviews: product.no_of_ratings, // Map to reviews for consistency
-                    images: product.image, // Assuming image is a single URL or array
-                }));
-
-                setProducts(validProducts);
+                setProducts(data);
                 setTotalProducts(response.data.total || data.length); // Adjust based on your API response
                 setLoading(false);
             } catch (err) {
@@ -102,7 +91,7 @@ function Categories({ categories = [] }) {
     const handlePrevProductPage = () => {
         setSkip((prevSkip) => Math.max(0, prevSkip - limit));
     };
-    const productCards = useMemo(() => products.map((product) => <ProductCard key={product.id} product={product} />), [products]);
+    const productCards = useMemo(() => products.map((product) => <ProductCard key={product._id} product={product} />), [products]);
 
     return (
         <div className={styles.container}>

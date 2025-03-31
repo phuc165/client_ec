@@ -2,7 +2,7 @@ import FullStar from '../../assets/svg/FullStar';
 import HalfStar from '../../assets/svg/HalfStar';
 import EmptyStar from '../../assets/svg/EmptyStar';
 
-const StarRatingDisplay = ({ rating, maxStars = 5 }) => {
+const StarRatingDisplay = ({ rating = 0, maxStars = 5 }) => {
     // Calculate full, half and empty stars
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 >= 0.5;

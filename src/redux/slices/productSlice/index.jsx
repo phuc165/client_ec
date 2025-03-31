@@ -15,17 +15,7 @@ export const fetchProducts = createAsyncThunk('products/fetchProducts', async ({
             throw new Error('Invalid data format from API');
         }
 
-        const validProducts = data.map((product) => ({
-            id: product.id || product._id,
-            title: product.name,
-            price: product.actual_price,
-            discountedPrice: product.discount_price,
-            rating: product.ratings,
-            reviews: product.no_of_ratings,
-            images: product.image,
-        }));
-
-        return { products: validProducts, total };
+        return { products: data, total };
     } catch (err) {
         return rejectWithValue(err.message || 'Failed to fetch products');
     }

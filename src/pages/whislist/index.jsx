@@ -32,19 +32,9 @@ function Whislist() {
                     throw new Error('Invalid data format from API');
                 }
 
-                const validProducts = data.map((product) => ({
-                    id: product.id || product._id,
-                    title: product.name,
-                    price: product.actual_price,
-                    discountedPrice: product.discount_price,
-                    rating: product.ratings,
-                    reviews: product.no_of_ratings,
-                    images: product.image,
-                }));
-
                 setTotalProducts(total || 0); // Still update totalProducts if backend provides it
                 setLoading(false);
-                return validProducts; // Return the fetched products
+                return data; // Return the fetched products
             } catch (err) {
                 setError(err.message || 'Failed to fetch products');
                 setLoading(false);
@@ -82,7 +72,7 @@ function Whislist() {
     };
 
     // Memoized rendering
-    const productCards = useMemo(() => products.map((product) => <ProductCard key={product.id} product={product} isWishlist={true} />), [products]);
+    const productCards = useMemo(() => products.map((product) => <ProductCard key={product._id} product={product} isWishlist={true} />), [products]);
     return (
         <div className={clsx(styles.container)}>
             <div className={clsx(styles.whislistContainer)}>

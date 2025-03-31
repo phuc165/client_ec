@@ -48,7 +48,7 @@ function ExploreProduct({ initLimit }) {
             return <div>No products available</div>;
         }
 
-        return products.map((product) => <ProductCard key={product.id} product={product} />);
+        return products.map((product) => <ProductCard key={product._id} product={product} />);
     }, [loading, error, products, skeletonCards]);
 
     return (
@@ -60,16 +60,7 @@ function ExploreProduct({ initLimit }) {
             </div>
             <div className={clsx(styles.productContainer)}>
                 {loading ? (
-                    <>
-                        <ProductCardSkeleton />
-                        <ProductCardSkeleton />
-                        <ProductCardSkeleton />
-                        <ProductCardSkeleton />
-                        <ProductCardSkeleton />
-                        <ProductCardSkeleton />
-                        <ProductCardSkeleton />
-                        <ProductCardSkeleton />
-                    </>
+                    skeletonCards
                 ) : error ? (
                     <div className={styles.errorContainer}>
                         <p>Error: {error}</p>

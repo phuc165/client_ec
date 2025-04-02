@@ -1,51 +1,45 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import styles from '../../styles/core/bestSeller.module.scss';
 import clsx from 'clsx';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts } from '../../redux/slices/productSlice';
 
 import HomeTitle from '../HomeTitle';
 import ProductCard from '../ProductCard';
 import ProductCardSkeleton from '../ProductCardSkeleton';
 import ViewAllButton from '../ViewAllButton';
 
-function BestSeller() {
-    const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [limit] = useState(4);
+function BestSeller({ initLimit }) {
+    const dispatch = useDispatch();
+    const { products, loading, error, totalProducts } = useSelector((state) => state.products);
+    const [limit] = useState(initLimit);
     const [skip, setSkip] = useState(0);
-    const [totalProducts, setTotalProducts] = useState(0);
 
     useEffect(() => {
-        const fetchProducts = async () => {
-            setLoading(true);
-            setError(null);
+        dispatch(fetchProducts({ limit, skip, type: 'bestSeller' }));
+    }, [dispatch, limit, skip]);
 
-            try {
-                const response = await axios.get(
-                    `http://localhost:3000/api/v1/product/bestSeller?limit=${limit}&skip=${skip}&select=id,name,image,ratings,no_of_ratings,discount_price,actual_price,sales`,
-                );
+    const skeletonCards = useMemo(() => {
+        return Array(limit)
+            .fill(null)
+            .map((_, index) => <ProductCardSkeleton key={index} />);
+    }, [limit]);
 
-                // Assuming your backend returns { success: true, message: "...", data: [...] }
-                const { data } = response.data;
+    const productCards = useMemo(() => {
+        if (loading.bestSeller) {
+            return skeletonCards;
+        }
 
-                if (!Array.isArray(data)) {
-                    throw new Error('Invalid data format from API');
-                }
+        if (error.bestSeller) {
+            return <div>Error: {error.bestSeller}</div>;
+        }
 
-                setProducts(data);
-                setTotalProducts(response.data.total || data.length); // Adjust based on your API response
-                setLoading(false);
-            } catch (err) {
-                setError(err.message || 'Failed to fetch products');
-                setLoading(false);
-            }
-        };
+        if (products.bestSeller.length === 0) {
+            return <div>No products available</div>;
+        }
 
-        fetchProducts();
-    }, [skip, limit]);
-
-    const productCards = useMemo(() => products.map((product) => <ProductCard key={product._id} product={product} />), [products]);
+        return products.bestSeller.map((product) => <ProductCard key={product._id} product={product} />);
+    }, [loading.bestSeller, error.bestSeller, products.bestSeller, skeletonCards]);
 
     return (
         <div className={clsx(styles.container)}>
@@ -54,19 +48,14 @@ function BestSeller() {
                 <ViewAllButton content='View All' page='homeBestSeller' />
             </div>
             <div className={clsx(styles.productContainer)}>
-                {loading ? (
-                    <>
-                        <ProductCardSkeleton />
-                        <ProductCardSkeleton />
-                        <ProductCardSkeleton />
-                        <ProductCardSkeleton />
-                    </>
-                ) : error ? (
+                {loading.bestSeller ? (
+                    skeletonCards
+                ) : error.bestSeller ? (
                     <div className={styles.errorContainer}>
-                        <p>Error: {error}</p>
+                        <p>Error: {error.bestSeller}</p>
                         <button onClick={() => window.location.reload()}>Try Again</button>
                     </div>
-                ) : products.length > 0 ? (
+                ) : products.bestSeller.length > 0 ? (
                     productCards
                 ) : (
                     <div className={styles.noProductsContainer}>

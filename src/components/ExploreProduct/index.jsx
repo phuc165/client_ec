@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts } from '../../redux/slices/productSlice'; // Ensure the correct path
+import { fetchProducts } from '../../redux/slices/productSlice';
 import styles from '../../styles/core/exploreProduct.module.scss';
 import clsx from 'clsx';
 import HomeTitle from '../HomeTitle';

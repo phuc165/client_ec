@@ -5,12 +5,21 @@ import axios from 'axios';
 export const fetchProducts = createAsyncThunk('products/fetchProducts', async ({ limit, skip, type }, { rejectWithValue }) => {
     try {
         let url;
-        if (type === 'flashSale') {
-            url = `http://localhost:3000/api/v1/product/flashSale?limit=${limit}&skip=${skip}&select=id,name,image,ratings,no_of_ratings,discount_price,actual_price`;
-        } else if (type === 'explore') {
-            url = `http://localhost:3000/api/v1/product?limit=${limit}&skip=${skip}&select=id,name,image,ratings,no_of_ratings,discount_price,actual_price`;
-        } else {
-            throw new Error('Invalid product type');
+        switch (type) {
+            case 'flashSale': {
+                url = `http://localhost:3000/api/v1/product/flashSale?limit=${limit}&skip=${skip}&select=id,name,image,ratings,no_of_ratings,discount_price,actual_price`;
+                break;
+            }
+            case 'explore': {
+                url = `http://localhost:3000/api/v1/product?limit=${limit}&skip=${skip}&select=id,name,image,ratings,no_of_ratings,discount_price,actual_price`;
+                break;
+            }
+            case 'bestSeller': {
+                url = `http://localhost:3000/api/v1/product/bestSeller?limit=${limit}&skip=${skip}&select=id,name,image,ratings,no_of_ratings,discount_price,actual_price,sales`;
+                break;
+            }
+            default:
+                throw new Error('Invalid product type');
         }
 
         const response = await axios.get(url);
@@ -32,26 +41,30 @@ const productSlice = createSlice({
         products: {
             flashSale: [],
             explore: [],
+            bestSeller: [],
         },
         loading: {
             flashSale: false,
             explore: false,
+            bestSeller: false,
         },
         error: {
             flashSale: null,
             explore: null,
+            bestSeller: null,
         },
         totalProducts: {
             flashSale: 0,
             explore: 0,
+            bestSeller: 0,
         },
     },
     reducers: {
         clearProductState: (state) => {
-            state.products = { flashSale: [], explore: [] };
-            state.loading = { flashSale: false, explore: false };
-            state.error = { flashSale: null, explore: null };
-            state.totalProducts = { flashSale: 0, explore: 0 };
+            state.products = { flashSale: [], explore: [], bestSeller: [] };
+            state.loading = { flashSale: false, explore: false, bestSeller: false };
+            state.error = { flashSale: null, explore: null, bestSeller: null };
+            state.totalProducts = { flashSale: 0, explore: 0, bestSeller: 0 };
         },
     },
     extraReducers: (builder) => {

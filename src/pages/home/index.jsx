@@ -1,7 +1,8 @@
 import styles from '../../styles/core/home.module.scss';
 import clsx from 'clsx';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCategory } from '../../redux/slices/categorySlice';
 
 import Category from '../../components/Category';
 import Banner from '../../components/Banner';
@@ -15,35 +16,26 @@ import ExploreProduct from '../../components/ExploreProduct';
 import ProductShowcase from '../../components/ProductShowcase';
 
 function Home() {
-    const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const dispatch = useDispatch();
+    const { category, loading, error } = useSelector((state) => state.categories); // Note: 'categorys' matches the store config
 
     useEffect(() => {
-        axios
-            .get('http://localhost:3000/api/v1/category')
-            .then(function (response) {
-                // handle success
-                setData(response.data.data);
-                setLoading(false);
-            })
-            .catch(function (error) {
-                // handle error
-                console.log(error);
-                setError(error);
-                setLoading(false);
-            });
-    }, []);
+        // Dispatch the fetchCategory thunk to get category data
+        dispatch(fetchCategory({ type: 'category' }));
+    }, [dispatch]);
+    console.log(category);
+    // Get the categories array from the state
+    const categoriesData = category.category || [];
 
     return (
         <div className={clsx(styles.container)}>
             <div className={clsx(styles.belowHeader)}>
-                <Category categories={data} />
+                <Category categories={categoriesData} />
                 <Banner />
             </div>
             <FlashSale initLimit={4} />
             <HorizontalLine />
-            <Categories categories={data} />
+            <Categories categories={categoriesData} />
             <HorizontalLine />
             <BestSeller />
             <HorizontalLine />

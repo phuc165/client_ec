@@ -15,7 +15,7 @@ function SaleOffProduct() {
                     Music Experience
                 </h1>
 
-                <Timer timerName={'sale off product timer'} styleType='sale-off' />
+                <Timer timerName={'saleOffProductTimer'} styleType='sale-off' />
 
                 <button className={styles.buyButton}>Buy Now!</button>
             </div>

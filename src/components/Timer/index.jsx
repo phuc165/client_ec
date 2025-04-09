@@ -1,65 +1,61 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchTimers } from '../../redux/slices/timerSlice';
 import clsx from 'clsx';
 import styles from '../../styles/core/timer.module.scss';
 
 function Timer({ timerName, styleType }) {
+    const dispatch = useDispatch();
+    const { timers, loading, error } = useSelector((state) => state.timers);
+
     const [timeLeft, setTimeLeft] = useState({
         days: '00',
         hours: '00',
         minutes: '00',
         seconds: '00',
     });
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchTimerData = async () => {
-            try {
-                const response = await axios.get(`http://localhost:3000/api/v1/timer/${timerName}`);
-                const timerData = response.data.data[0] || response.data; // Handle nested or direct data
-                const endTime = timerData.endTime;
+        dispatch(fetchTimers({ type: timerName }));
+    }, [dispatch, timerName]);
 
-                const calculateTimeLeft = () => {
-                    const now = new Date().getTime();
-                    const end = new Date(endTime).getTime();
-                    const difference = end - now;
+    useEffect(() => {
+        const timerData = timers[timerName]?.[0]; // Get the first timer object
+        const endTime = timerData?.endTime;
 
-                    if (difference <= 0) {
-                        return { days: '00', hours: '00', minutes: '00', seconds: '00' };
-                    }
+        const calculateTimeLeft = () => {
+            if (!endTime) return { days: '00', hours: '00', minutes: '00', seconds: '00' };
 
-                    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-                    const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-                    const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+            const now = new Date().getTime();
+            const end = new Date(endTime).getTime();
+            const difference = end - now;
 
-                    return {
-                        days: String(days).padStart(2, '0'),
-                        hours: String(hours).padStart(2, '0'),
-                        minutes: String(minutes).padStart(2, '0'),
-                        seconds: String(seconds).padStart(2, '0'),
-                    };
-                };
-
-                setTimeLeft(calculateTimeLeft());
-                const interval = setInterval(() => {
-                    setTimeLeft(calculateTimeLeft());
-                }, 1000);
-
-                return () => clearInterval(interval);
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
+            if (difference <= 0) {
+                return { days: '00', hours: '00', minutes: '00', seconds: '00' };
             }
+
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+            return {
+                days: String(days).padStart(2, '0'),
+                hours: String(hours).padStart(2, '0'),
+                minutes: String(minutes).padStart(2, '0'),
+                seconds: String(seconds).padStart(2, '0'),
+            };
         };
 
-        fetchTimerData();
-    }, [timerName]);
+        setTimeLeft(calculateTimeLeft());
+        const interval = setInterval(() => {
+            setTimeLeft(calculateTimeLeft());
+        }, 1000);
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
+        return () => clearInterval(interval);
+    }, [timers, timerName]); // Depend on timers to update when Redux state changes
+    if (loading[timerName]) return <div>Loading...</div>;
+    if (error[timerName]) return <div>Error: {error[timerName]}</div>;
 
     const timeUnits = [
         { key: 'days', label: 'Days', value: timeLeft.days },

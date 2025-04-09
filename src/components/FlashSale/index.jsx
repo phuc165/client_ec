@@ -56,7 +56,7 @@ const FlashSale = ({ initLimit }) => {
         <div className={clsx(styles.container)}>
             <div className={clsx(styles.headerContainer)}>
                 <HomeTitle title={`Today's`} subTitle={`Flash Sales`} />
-                <Timer timerName='flash sale timer' styleType='flash-sale' />
+                <Timer timerName='flashSaleTimer' styleType='flash-sale' />
                 <Navigation limit={limit} skip={skip} totalProducts={totalProducts} onNextPage={handleNextPage} onPrevPage={handlePrevPage} />{' '}
                 {/* totalProducts might not be fully accurate anymore */}
             </div>

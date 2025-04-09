@@ -20,11 +20,8 @@ function Home() {
     const { category, loading, error } = useSelector((state) => state.categories); // Note: 'categorys' matches the store config
 
     useEffect(() => {
-        // Dispatch the fetchCategory thunk to get category data
         dispatch(fetchCategory({ type: 'category' }));
     }, [dispatch]);
-    console.log(category);
-    // Get the categories array from the state
     const categoriesData = category.category || [];
 
     return (
@@ -37,7 +34,7 @@ function Home() {
             <HorizontalLine />
             <Categories categories={categoriesData} />
             <HorizontalLine />
-            <BestSeller />
+            <BestSeller initLimit={4} />
             <HorizontalLine />
             <SaleOffProduct />
             <HorizontalLine />

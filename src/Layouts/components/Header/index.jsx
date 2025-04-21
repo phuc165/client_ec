@@ -1,5 +1,7 @@
 import { Link, useLocation } from 'react-router';
 import { useState, useRef, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../../../redux/slices/authSlice';
 import styles from '../../../styles/core/header.module.scss';
 import clsx from 'clsx';
 
@@ -17,6 +19,10 @@ function Header() {
     let location = useLocation();
     const [isOpen, setIsOpen] = useState(false);
     const iconRef = useRef(null);
+    const dispatch = useDispatch();
+
+    // Get user info from Redux store
+    const { userInfo } = useSelector((state) => state.auth);
 
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
@@ -26,6 +32,11 @@ function Header() {
         if (iconRef.current && !iconRef.current.contains(event.target)) {
             setIsOpen(false);
         }
+    };
+
+    const handleLogout = () => {
+        dispatch(logout());
+        setIsOpen(false);
     };
 
     useEffect(() => {
@@ -57,9 +68,11 @@ function Header() {
                     <Link to='/about' className={clsx(`${styles.navLink} ${location.pathname === '/about' ? styles.navLinkActive : ''}`)}>
                         About
                     </Link>
-                    <Link to='/signup' className={clsx(`${styles.navLink} ${location.pathname === '/signup' ? styles.navLinkActive : ''}`)}>
-                        Sign Up
-                    </Link>
+                    {!userInfo && (
+                        <Link to='/signup' className={clsx(`${styles.navLink} ${location.pathname === '/signup' ? styles.navLinkActive : ''}`)}>
+                            Sign Up
+                        </Link>
+                    )}
                 </div>
                 <div className={clsx(styles.search)}>
                     <div className={clsx(styles.searchBar)}>
@@ -74,33 +87,42 @@ function Header() {
                     <Link to='/cart' className={clsx(styles.searchBarIcon)}>
                         <Cart />
                     </Link>
-                    <div className={clsx(styles.searchBarIcon)} onClick={toggleDropdown} ref={iconRef}>
-                        {isOpen ? (
-                            <>
-                                <UserIconOn />
-                                <div className={clsx(styles.userDropdown)}>
-                                    <Link className={clsx(styles.dropdownTitle)}>
-                                        <UserIconWhite />
-                                        <p>My Account</p>
-                                    </Link>
-                                    <Link className={clsx(styles.dropdownTitle)}>
-                                        <BagIcon />
-                                        <p>My Order</p>
-                                    </Link>
-                                    <Link className={clsx(styles.dropdownTitle)}>
-                                        <StarIcon />
-                                        <p>My Reviews</p>
-                                    </Link>
-                                    <Link className={clsx(styles.dropdownTitle)}>
-                                        <LogOutIcon />
-                                        <p>Logout</p>
-                                    </Link>
-                                </div>
-                            </>
-                        ) : (
+
+                    {userInfo ? (
+                        // Show user dropdown only if logged in
+                        <div className={clsx(styles.searchBarIcon)} onClick={toggleDropdown} ref={iconRef}>
+                            {isOpen ? (
+                                <>
+                                    <UserIconOn />
+                                    <div className={clsx(styles.userDropdown)}>
+                                        <Link to='/profile' className={clsx(styles.dropdownTitle)}>
+                                            <UserIconWhite />
+                                            <p>My Account</p>
+                                        </Link>
+                                        <Link to='/orders' className={clsx(styles.dropdownTitle)}>
+                                            <BagIcon />
+                                            <p>My Order</p>
+                                        </Link>
+                                        <Link to='/reviews' className={clsx(styles.dropdownTitle)}>
+                                            <StarIcon />
+                                            <p>My Reviews</p>
+                                        </Link>
+                                        <div onClick={handleLogout} className={clsx(styles.dropdownTitle)}>
+                                            <LogOutIcon />
+                                            <p>Logout</p>
+                                        </div>
+                                    </div>
+                                </>
+                            ) : (
+                                <UserIcon />
+                            )}
+                        </div>
+                    ) : (
+                        // Show login link if not logged in
+                        <Link to='/login' className={clsx(styles.searchBarIcon)}>
                             <UserIcon />
-                        )}
-                    </div>
+                        </Link>
+                    )}
                 </div>
             </div>
             <hr />

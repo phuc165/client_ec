@@ -95,7 +95,7 @@ function Header() {
                                 <>
                                     <UserIconOn />
                                     <div className={clsx(styles.userDropdown)}>
-                                        <Link to='/profile' className={clsx(styles.dropdownTitle)}>
+                                        <Link to='/account' className={clsx(styles.dropdownTitle)}>
                                             <UserIconWhite />
                                             <p>My Account</p>
                                         </Link>

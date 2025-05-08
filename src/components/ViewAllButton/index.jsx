@@ -3,7 +3,7 @@ import clsx from 'clsx';
 
 const ViewAllButton = ({ content, page, className, ...prop }) => {
     return (
-        <button className={clsx(styles.button, styles[page], className)} {...prop}>
+        <button className={clsx(styles.button, styles[page], styles[className])} {...prop}>
             {content}
         </button>
     );

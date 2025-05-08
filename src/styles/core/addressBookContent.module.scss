@@ -1,0 +1,56 @@
+@use '../styles.scss';
+
+.container {
+
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+    .title {
+        margin-bottom: 30px;
+        @include styles.font-poppins-medium(20px);
+        color: styles.$secondary-color-2;
+    }
+
+    .formContent {
+        padding: 50px 30px 50px 80px;
+        display: flex;
+        flex-direction: column;
+
+        .section {
+            display: flex;
+        }
+
+        .field {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 15px;
+            @include styles.font-poppins-regular(16px);
+        }
+
+        input {
+            margin-bottom: 30px;
+            height: 50px;
+            margin-right: 50px;
+            background-color: styles.$secondary-color;
+            border: none;
+            text-indent: 15px;
+
+            &::placeholder {
+                @include styles.font-poppins-regular(16px);
+                text-align: start;
+                text-indent: 15px;
+                opacity: 0.5;
+            }
+        }
+
+        .section_2 {
+            width: 38%;
+            display: flex;
+            align-self: flex-end;
+            margin-right: 50px;
+        }
+    }
+}

@@ -1,0 +1,37 @@
+@use '../styles.scss';
+
+.container {
+    width: 83%;
+    margin: auto;
+    display: flex;
+
+    .sidebar {
+        width: 25%;
+
+        .title {
+            @include styles.font-poppins-medium(16px);
+        }
+
+        .sidebarItems {
+            margin-left: 25px;
+            cursor: pointer;
+
+            .item {
+                @include styles.font-poppins-regular(16px);
+                color: styles.$text-color-2;
+                opacity: 50%;
+            }
+
+            .active {
+                color: styles.$secondary-color-2;
+                opacity: 100%;
+            }
+        }
+
+
+    }
+
+    .content {
+        width: 75%;
+    }
+}

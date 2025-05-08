@@ -11,6 +11,7 @@ import Login from '../pages/login';
 import ProductDetail from '../pages/productDetail';
 import Signup from '../pages/signup';
 import Whislist from '../pages/whislist';
+import Reviews from '../pages/reviews';
 
 const publicRoutes = [
     { path: '/', Component: Home, layout: HomeLayout },
@@ -24,6 +25,7 @@ const publicRoutes = [
     { path: '/productDetail', Component: ProductDetail },
     { path: '/signup', Component: Signup },
     { path: '/whislist', Component: Whislist },
+    { path: '/reviews', Component: Reviews },
 ];
 
 const privateRoutes = [];

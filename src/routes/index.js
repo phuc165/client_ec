@@ -26,6 +26,7 @@ const publicRoutes = [
     { path: '/signup', Component: Signup },
     { path: '/whislist', Component: Whislist },
     { path: '/reviews', Component: Reviews },
+    { path: '/product/:id', Component: ProductDetail },
 ];
 
 const privateRoutes = [];

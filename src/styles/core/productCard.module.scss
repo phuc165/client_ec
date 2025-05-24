@@ -76,6 +76,9 @@
         height: 48px;
         overflow: hidden;
         text-overflow: ellipsis;
+        text-decoration: none;
+        color: styles.$text-color-2;
+        display: block
     }
 
     .priceContainer {

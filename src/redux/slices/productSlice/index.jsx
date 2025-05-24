@@ -1,4 +1,3 @@
-// src/redux/slices/productSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
@@ -29,9 +28,25 @@ export const fetchProducts = createAsyncThunk('products/fetchProducts', async ({
             throw new Error('Invalid data format from API');
         }
 
-        return { products: data, total, type }; // Include type in the payload
+        return { products: data, total, type };
     } catch (err) {
         return rejectWithValue(err.message || 'Failed to fetch products');
+    }
+});
+
+export const fetchProductById = createAsyncThunk('products/fetchProductById', async (id, { rejectWithValue }) => {
+    try {
+        const url = `http://localhost:3000/api/v1/product/${id}`;
+        const response = await axios.get(url);
+        const product = response.data.data;
+
+        if (!product || typeof product !== 'object') {
+            throw new Error('Invalid product data from API');
+        }
+
+        return product;
+    } catch (err) {
+        return rejectWithValue(err.message || 'Failed to fetch product');
     }
 });
 
@@ -43,15 +58,18 @@ const productSlice = createSlice({
             explore: [],
             bestSeller: [],
         },
+        singleProduct: null,
         loading: {
             flashSale: false,
             explore: false,
             bestSeller: false,
+            singleProduct: false,
         },
         error: {
             flashSale: null,
             explore: null,
             bestSeller: null,
+            singleProduct: null,
         },
         totalProducts: {
             flashSale: 0,
@@ -62,8 +80,9 @@ const productSlice = createSlice({
     reducers: {
         clearProductState: (state) => {
             state.products = { flashSale: [], explore: [], bestSeller: [] };
-            state.loading = { flashSale: false, explore: false, bestSeller: false };
-            state.error = { flashSale: null, explore: null, bestSeller: null };
+            state.singleProduct = null;
+            state.loading = { flashSale: false, explore: false, bestSeller: false, singleProduct: false };
+            state.error = { flashSale: null, explore: null, bestSeller: null, singleProduct: null };
             state.totalProducts = { flashSale: 0, explore: 0, bestSeller: 0 };
         },
     },
@@ -83,6 +102,18 @@ const productSlice = createSlice({
                 const { type } = action.meta.arg;
                 state.loading[type] = false;
                 state.error[type] = action.payload;
+            })
+            .addCase(fetchProductById.pending, (state) => {
+                state.loading.singleProduct = true;
+                state.error.singleProduct = null;
+            })
+            .addCase(fetchProductById.fulfilled, (state, action) => {
+                state.loading.singleProduct = false;
+                state.singleProduct = action.payload;
+            })
+            .addCase(fetchProductById.rejected, (state, action) => {
+                state.loading.singleProduct = false;
+                state.error.singleProduct = action.payload;
             });
     },
 });

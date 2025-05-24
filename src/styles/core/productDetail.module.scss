@@ -1,0 +1,302 @@
+@use '../styles.scss';
+
+.container {
+    width: 83%;
+    margin: auto;
+    padding: 2rem 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+    .product {
+        display: flex;
+        gap: 4rem;
+        margin-bottom: 3rem;
+        align-items: flex-start;
+
+        .imageContainer {
+            width: 60%;
+            position: sticky;
+            top: 2rem;
+        }
+
+        .infoContainer {
+            width: 35%;
+            padding: 1rem 0;
+
+            // Product title
+            >div:first-child {
+                @include styles.font-inter-semibold(24px);
+                color: #1a1a1a;
+                margin-bottom: 0.75rem;
+                line-height: 1.3;
+            }
+
+            // Rating section
+            >div:nth-child(2) {
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                margin-bottom: 1rem;
+
+                >div:last-child {
+                    @include styles.font-poppins-regular(14px);
+                    opacity: 50%;
+                }
+            }
+
+            // Price section
+            >div:nth-child(3) {
+                @include styles.font-inter-regular(24px);
+                margin-bottom: 1rem;
+            }
+
+            // Description
+            >div:nth-child(4) {
+                @include styles.font-poppins-regular(14px);
+                margin-bottom: 1.5rem;
+            }
+
+            hr {
+                width: 100%;
+                opacity: 1;
+            }
+        }
+    }
+
+    .attributeSection {
+        margin-bottom: 1.5rem;
+
+        h3 {
+            @include styles.font-inter-regular(20px);
+            margin-bottom: 0.75rem;
+            text-transform: capitalize;
+        }
+
+        >div {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .optionButton {
+            padding: 0.5rem 1rem;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            @include styles.font-poppins-regular(14px);
+            transition: all 0.2s ease;
+            min-width: 2.5rem;
+            text-align: center;
+
+            &:hover {
+                border-color: #ccc;
+                color: #333;
+            }
+
+            &.selected {
+                border-color: #dc3545;
+                background: #dc3545;
+                color: white;
+            }
+
+            // Special styling for size buttons
+            .attributeSection:has(h3:contains("size")) & {
+                text-transform: uppercase;
+                font-weight: 600;
+            }
+        }
+    }
+
+    .buyContainer {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin: 2rem 0;
+
+        .quantityContainer {
+            display: flex;
+            align-items: center;
+            border: 2px solid #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+
+            >div {
+                padding: 0.75rem 1rem;
+                cursor: pointer;
+                user-select: none;
+                font-weight: 600;
+                transition: background-color 0.2s ease;
+
+                &:first-child,
+                &:last-child {
+                    border-right: 1px solid #e0e0e0;
+                    @include styles.font-poppins-medium(20px);
+
+                    &:hover {
+                        background: #e9ecef;
+                    }
+                }
+
+                &:last-child {
+                    border-right: none;
+                    border-left: 1px solid #e0e0e0;
+                }
+
+                &:nth-child(2) {
+                    background: white;
+                    @include styles.font-poppins-medium(20px);
+                    min-width: 3rem;
+                    text-align: center;
+                }
+            }
+        }
+
+        .buyNow {
+            flex: 1;
+            background: #dc3545;
+            color: white;
+            padding: 0.875rem 2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            @include styles.font-poppins-medium(16px);
+            text-align: center;
+            transition: background-color 0.2s ease;
+            border: none;
+            font-size: 1rem;
+
+            &:hover {
+                background: #c82333;
+            }
+        }
+
+        // Heart icon container
+        > :last-child {
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+
+            &:hover {
+                border-color: #dc3545;
+
+                svg {
+                    fill: #dc3545;
+                }
+            }
+        }
+    }
+
+    // Shipping and return info
+    .afterBuyContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+
+        .shippingContainer,
+        .returnContainer {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1.5rem 2rem;
+            background: white;
+            border: 1px solid #111;
+            border-radius: 8px 8px 0 0;
+            position: relative;
+
+
+            .icon {
+                width: 2rem;
+                height: 2rem;
+                background: #f8f9fa;
+                border-radius: 50%;
+                flex-shrink: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-top: 0.2rem;
+            }
+
+            .textBlock {
+                display: flex;
+                flex-direction: column;
+                gap: 0.25rem;
+            }
+
+            .title {
+                @include styles.font-poppins-medium(16px);
+                margin-bottom: 0;
+            }
+
+            .desc {
+                @include styles.font-poppins-medium(12px);
+                line-height: 1.4;
+                margin-top: 0.1rem;
+            }
+        }
+
+        .shippingContainer {
+            border-radius: 8px 8px 0 0;
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .returnContainer {
+            border-radius: 0 0 8px 8px;
+            border-top: none;
+        }
+
+        .divider {
+            height: 1px;
+            background: #111;
+            width: 100%;
+            margin: 0;
+        }
+    }
+
+    .relatedProducts {
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid #e0e0e0;
+    }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+
+        .product {
+            flex-direction: column;
+            gap: 1.5rem;
+
+            .imageContainer,
+            .infoContainer {
+                width: 100%;
+            }
+        }
+
+        .buyContainer {
+            flex-wrap: wrap;
+            gap: 0.75rem;
+
+            .quantityContainer {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .buyNow {
+                order: 1;
+                width: calc(100% - 3rem);
+            }
+
+            > :last-child {
+                order: 2;
+            }
+        }
+    }
+}

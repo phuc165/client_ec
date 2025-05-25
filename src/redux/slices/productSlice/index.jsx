@@ -50,6 +50,23 @@ export const fetchProductById = createAsyncThunk('products/fetchProductById', as
     }
 });
 
+export const fetchRelatedProducts = createAsyncThunk('products/fetchRelatedProducts', async ({ productId, limit, skip }, { rejectWithValue }) => {
+    try {
+        const url = `http://localhost:3000/api/v1/product/related/${productId}?limit=${limit}&skip=${skip}&select=id,name,image,ratings,no_of_ratings,discount_price,actual_price`;
+        const response = await axios.get(url);
+        const { data } = response.data;
+
+        if (!Array.isArray(data)) {
+            console.error('Invalid data format:', data);
+            throw new Error('Invalid data format from API');
+        }
+        return data;
+    } catch (err) {
+        console.error('Error in fetchRelatedProducts:', err);
+        return rejectWithValue(err.message || 'Failed to fetch related products');
+    }
+});
+
 const productSlice = createSlice({
     name: 'products',
     initialState: {
@@ -57,6 +74,7 @@ const productSlice = createSlice({
             flashSale: [],
             explore: [],
             bestSeller: [],
+            related: [],
         },
         singleProduct: null,
         loading: {
@@ -64,17 +82,20 @@ const productSlice = createSlice({
             explore: false,
             bestSeller: false,
             singleProduct: false,
+            related: false,
         },
         error: {
             flashSale: null,
             explore: null,
             bestSeller: null,
             singleProduct: null,
+            related: null,
         },
         totalProducts: {
             flashSale: 0,
             explore: 0,
             bestSeller: 0,
+            related: 0,
         },
     },
     reducers: {
@@ -114,6 +135,19 @@ const productSlice = createSlice({
             .addCase(fetchProductById.rejected, (state, action) => {
                 state.loading.singleProduct = false;
                 state.error.singleProduct = action.payload;
+            })
+            .addCase(fetchRelatedProducts.pending, (state) => {
+                state.loading.related = true;
+                state.error.related = null;
+            })
+            .addCase(fetchRelatedProducts.fulfilled, (state, action) => {
+                state.loading.related = false;
+                state.products.related = action.payload;
+                state.totalProducts.related = action.payload.length; // Optional
+            })
+            .addCase(fetchRelatedProducts.rejected, (state, action) => {
+                state.loading.related = false;
+                state.error.related = action.payload;
             });
     },
 });

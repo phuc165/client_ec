@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProductById } from '../../redux/slices/productSlice';
+import { fetchProductById, fetchRelatedProducts } from '../../redux/slices/productSlice';
 import styles from '../../styles/core/productDetail.module.scss';
 import clsx from 'clsx';
 
@@ -10,11 +10,14 @@ import StarRatingDisplay from '../../components/StarRatingDisplay';
 import ProductHeart from '../../assets/svg/ProductHeart';
 import Delivery from '../../assets/svg/Delivery';
 import Return from '../../assets/svg/Return';
+import ProductCard from '../../components/ProductCard';
+import ProductCardSkeleton from '../../components/ProductCardSkeleton';
+import HomeTitle from '../../components/HomeTitle';
 
 function ProductDetail() {
     const { id } = useParams();
     const dispatch = useDispatch();
-    const { singleProduct, loading, error } = useSelector((state) => state.products);
+    const { singleProduct, products, loading, error } = useSelector((state) => state.products);
     const [quantity, setQuantity] = useState(1);
 
     useEffect(() => {
@@ -23,7 +26,12 @@ function ProductDetail() {
         }
     }, [dispatch, id]);
 
-    // State for selected color and size, separated for clarity
+    useEffect(() => {
+        if (singleProduct?._id) {
+            dispatch(fetchRelatedProducts({ productId: singleProduct._id, limit: 5, skip: 0 }));
+        }
+    }, [singleProduct, dispatch]);
+
     const [selectedColor, setSelectedColor] = useState(() => {
         if (singleProduct && singleProduct.attributes) {
             return singleProduct.attributes.find((attr) => attr.name === 'color')?.options[0] || null;
@@ -32,7 +40,6 @@ function ProductDetail() {
     });
     const [selectedSize, setSelectedSize] = useState(null);
 
-    // Set default values when product data loads
     useEffect(() => {
         if (singleProduct && singleProduct.attributes) {
             const defaultColor = singleProduct.attributes.find((attr) => attr.name === 'color')?.options[0];
@@ -56,15 +63,12 @@ function ProductDetail() {
         return <div className={clsx(styles.container)}>No product found</div>;
     }
 
-    // Find the variation based on selected color only
     const selectedVariation =
-        singleProduct.variations?.find((variation) => variation.attributes.color === selectedColor) || singleProduct.variations?.[0]; // Fallback to first variation if none matches
+        singleProduct.variations?.find((variation) => variation.attributes.color === selectedColor) || singleProduct.variations?.[0];
 
-    // Use variation images for the selected color
     const images =
         selectedVariation?.images || [singleProduct.image, singleProduct.image_2, singleProduct.image_3, singleProduct.image_4].filter(Boolean);
 
-    // Handle color selection (updates gallery)
     const handleAttributeSelect = (attributeName, value) => {
         if (attributeName === 'color') {
             setSelectedColor(value);
@@ -73,7 +77,6 @@ function ProductDetail() {
         }
     };
 
-    // Quantity handlers
     const decreaseQuantity = () => {
         setQuantity((prev) => Math.max(1, prev - 1));
     };
@@ -82,10 +85,14 @@ function ProductDetail() {
         setQuantity((prev) => prev + 1);
     };
 
-    // Format price
     const formatPrice = (price) => {
         return `$${parseFloat(price).toFixed(2)}`;
     };
+
+    // Create skeleton cards for loading state (5 items to match limit)
+    const skeletonCards = Array(5)
+        .fill(null)
+        .map((_, index) => <ProductCardSkeleton key={index} />);
 
     return (
         <div className={clsx(styles.container)}>
@@ -103,14 +110,13 @@ function ProductDetail() {
                     <div>{singleProduct.description}</div>
                     <hr />
 
-                    {/* Variation Selection */}
-                    {singleProduct.attributes?.map((attr) => (
-                        <div key={attr.name} className={clsx(styles.attributeSection)}>
+                    {singleProduct.attributes?.map((attr, index) => (
+                        <div key={`attr-${index}`} className={clsx(styles.attributeSection)}>
                             <h3>{attr.name === 'color' ? 'Colours:' : `${attr.name}:`}</h3>
                             <div>
-                                {attr.options.map((option) => (
+                                {attr.options.map((option, optionIndex) => (
                                     <button
-                                        key={option}
+                                        key={`option-${index}-${optionIndex}`}
                                         onClick={() => handleAttributeSelect(attr.name, option)}
                                         className={clsx(styles.optionButton, {
                                             [styles.selected]: (attr.name === 'color' ? selectedColor : selectedSize) === option,
@@ -158,7 +164,22 @@ function ProductDetail() {
                     </div>
                 </div>
             </div>
-            <div className={clsx(styles.relatedProducts)}>{/* Related products section */}</div>
+            <div className={clsx(styles.relatedProducts)}>
+                <HomeTitle title={`Related Item`} />
+                {loading.related ? (
+                    <div className={clsx(styles.productContainer)}>{skeletonCards}</div>
+                ) : error.related ? (
+                    <div>Error: {error.related}</div>
+                ) : products?.related?.length > 0 ? (
+                    <div className={clsx(styles.productContainer)}>
+                        {products.related.map((product) => (
+                            <ProductCard key={product._id} product={product} />
+                        ))}
+                    </div>
+                ) : (
+                    <div>No related products found</div>
+                )}
+            </div>
         </div>
     );
 }

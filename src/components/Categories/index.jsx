@@ -10,22 +10,35 @@ import ProductCardSkeleton from '../ProductCardSkeleton';
 import ViewAllButton from '../ViewAllButton';
 
 function Categories({ categories = [] }) {
-    //category display
-    const initCategory = 'Bags & Luggage';
-    const [selectedCategory, setSelectedCategory] = useState(initCategory);
-    const [currentPage, setCurrentPage] = useState(0);
-    const [subCategory, setSubCategory] = useState('');
-
     // Convert the comma-separated sub_category string into an array and create subcategory objects
-    const allSubcategories = Array.isArray(categories)
-        ? categories.flatMap((cat) => {
-              const subCategories = cat.sub_category.split(',').map((item) => item.trim());
-              return subCategories.map((subcat) => ({
-                  main_category: cat.main_category,
-                  sub_category: subcat,
-              }));
-          })
-        : [];
+    const allSubcategories = useMemo(() => {
+        return Array.isArray(categories)
+            ? categories.flatMap((cat) => {
+                  const subCategories = cat.sub_category.split(',').map((item) => item.trim());
+                  return subCategories.map((subcat) => ({
+                      main_category: cat.main_category,
+                      sub_category: subcat,
+                  }));
+              })
+            : [];
+    }, [categories]);
+
+    // Set default subcategory from the first available subcategory
+    const defaultSubcategory = allSubcategories.length > 0 ? allSubcategories[0] : null;
+
+    //category display
+    const [selectedCategory, setSelectedCategory] = useState(defaultSubcategory);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [subCategory, setSubCategory] = useState(defaultSubcategory?.sub_category || '');
+
+    // Update selectedCategory and subCategory when categories prop changes
+    useEffect(() => {
+        if (allSubcategories.length > 0 && !selectedCategory) {
+            const firstSubcategory = allSubcategories[0];
+            setSelectedCategory(firstSubcategory);
+            setSubCategory(firstSubcategory.sub_category);
+        }
+    }, [allSubcategories, selectedCategory]);
 
     const ITEMS_PER_PAGE = 6;
     const paginatedSubcategories = allSubcategories.slice(currentPage * ITEMS_PER_PAGE, (currentPage + 1) * ITEMS_PER_PAGE);
@@ -54,9 +67,14 @@ function Categories({ categories = [] }) {
     const [limit] = useState(4);
     const [skip, setSkip] = useState(0);
     const [totalProducts, setTotalProducts] = useState(0);
-    const [currentProductPage, setCurrentProductPage] = useState(0);
 
     useEffect(() => {
+        // Don't fetch if subCategory is empty
+        if (!subCategory) {
+            setLoading(false);
+            return;
+        }
+
         const fetchProductsBySubCategory = async () => {
             setLoading(true);
             setError(null);
@@ -83,7 +101,8 @@ function Categories({ categories = [] }) {
         };
 
         fetchProductsBySubCategory();
-    }, [skip, limit, selectedCategory]); // Added selectedCategory to the dependency array
+    }, [skip, limit, subCategory]); // Changed from selectedCategory to subCategory
+
     const handleNextProductPage = () => {
         setSkip((prevSkip) => prevSkip + limit);
     };
@@ -91,7 +110,20 @@ function Categories({ categories = [] }) {
     const handlePrevProductPage = () => {
         setSkip((prevSkip) => Math.max(0, prevSkip - limit));
     };
+
     const productCards = useMemo(() => products.map((product) => <ProductCard key={product._id} product={product} />), [products]);
+
+    // Don't render if categories are not loaded yet
+    if (!categories || categories.length === 0) {
+        return (
+            <div className={styles.container}>
+                <div className={clsx(styles.headerContainer)}>
+                    <HomeTitle title='Categories' subTitle='Browse By Category' />
+                </div>
+                <div className={styles.loadingContainer}>Loading categories...</div>
+            </div>
+        );
+    }
 
     return (
         <div className={styles.container}>
@@ -137,7 +169,7 @@ function Categories({ categories = [] }) {
                     productCards
                 ) : (
                     <div className={styles.noProductsContainer}>
-                        <p>No products available</p>
+                        <p>No products available for this category</p>
                     </div>
                 )}
             </div>

@@ -55,7 +55,7 @@ function AddressBookContent() {
 
     return (
         <div className={clsx(styles.container)}>
-            <h2>Your Address Book</h2>
+            <h2 className={styles.title}>Your Address Book</h2>
             <div className={styles.addressList}>
                 {addresses.length === 0 ? (
                     <p>You have no saved addresses.</p>
@@ -65,13 +65,21 @@ function AddressBookContent() {
                             <p>
                                 {address.province}, {address.town}, {address.block}, {address.address}
                             </p>
-                            <button onClick={() => handleEdit(address)}>Edit</button>
-                            <button onClick={() => handleDelete(address._id)}>Delete</button>
+                            <div>
+                                <button className={styles.editButton} onClick={() => handleEdit(address)}>
+                                    Edit
+                                </button>
+                                <button className={styles.deleteButton} onClick={() => handleDelete(address._id)}>
+                                    Delete
+                                </button>
+                            </div>
                         </div>
                     ))
                 )}
             </div>
-            <button onClick={handleAddNew}>Add New Address</button>
+            <button className={styles.addButton} onClick={handleAddNew}>
+                Add New Address
+            </button>
             {formMode && (
                 <div className={styles.formContent}>
                     <h3>{formMode === 'add' ? 'Add New Address' : 'Edit Address'}</h3>
@@ -81,13 +89,20 @@ function AddressBookContent() {
                             <input
                                 type='text'
                                 id='province'
+                                placeholder='Enter province/city'
                                 value={formData.province}
                                 onChange={(e) => setFormData({ ...formData, province: e.target.value })}
                             />
                         </div>
                         <div className={styles.field}>
                             <label htmlFor='town'>Town/District</label>
-                            <input type='text' id='town' value={formData.town} onChange={(e) => setFormData({ ...formData, town: e.target.value })} />
+                            <input
+                                type='text'
+                                id='town'
+                                placeholder='Enter town/district'
+                                value={formData.town}
+                                onChange={(e) => setFormData({ ...formData, town: e.target.value })}
+                            />
                         </div>
                     </div>
                     <div className={styles.section}>
@@ -96,15 +111,17 @@ function AddressBookContent() {
                             <input
                                 type='text'
                                 id='block'
+                                placeholder='Enter block/village'
                                 value={formData.block}
                                 onChange={(e) => setFormData({ ...formData, block: e.target.value })}
                             />
                         </div>
                         <div className={styles.field}>
-                            <label htmlFor='address'>Number, Ally, Road</label>
+                            <label htmlFor='address'>Number, Alley, Road</label>
                             <input
                                 type='text'
                                 id='address'
+                                placeholder='Enter number, alley, road'
                                 value={formData.address}
                                 onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                             />

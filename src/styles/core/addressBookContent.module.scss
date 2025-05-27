@@ -8,11 +8,15 @@
     .title {
         margin-bottom: 30px;
         @include styles.font-poppins-medium(20px);
-        color: styles.$secondary-color-2;
     }
 
     .addressList {
         margin-bottom: 20px;
+
+        p {
+            @include styles.font-inter-regular(16px);
+            margin: 0;
+        }
     }
 
     .addressItem {
@@ -34,6 +38,7 @@
         border-radius: 3px;
         cursor: pointer;
         color: white;
+        @include styles.font-inter-semibold(14px);
         transition: background-color 0.3s;
     }
 
@@ -96,8 +101,7 @@
 
         label {
             margin-bottom: 10px;
-            @include styles.font-poppins-regular(16px);
-            font-weight: 600;
+            @include styles.font-inter-semibold(16px);
         }
 
         input {
@@ -108,11 +112,11 @@
             border-radius: 5px;
             padding: 0 10px;
             margin-bottom: 20px;
-            text-indent: 0;
+            @include styles.font-inter-regular(14px);
             transition: border-color 0.3s;
 
             &::placeholder {
-                @include styles.font-poppins-regular(14px);
+                @include styles.font-inter-regular(14px);
                 opacity: 0.5;
             }
         }

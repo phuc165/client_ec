@@ -38,3 +38,22 @@
     width: 60%;
     height: 60px;
 }
+
+.coupon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 40%;
+    background-color: styles.$button-color-2;
+}
+
+.checkout {
+    width: 55%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 60px;
+    margin: auto;
+}

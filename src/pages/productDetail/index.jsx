@@ -146,7 +146,7 @@ function ProductDetail() {
                             </div>
                             <div className={styles.textBlock}>
                                 <div className={styles.title}>Free Delivery</div>
-                                <div className={styles.desc}>Enter your postal code for Delivery Availability</div>
+                                <div className={styles.desc}>Delivery across the country</div>
                             </div>
                         </div>
                         <div className={styles.divider}></div>

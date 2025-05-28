@@ -1,0 +1,153 @@
+@use '../styles.scss';
+
+.container {
+    width: 83%;
+    margin: auto;
+
+    .cartContainer {
+        width: 100%;
+        margin-bottom: 24px;
+
+        .title {
+            display: flex;
+            justify-content: space-between;
+            padding: 24px 40px;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+            border-radius: 4px;
+            align-items: center;
+
+            th {
+                @include styles.font-poppins-regular(16px);
+                width: 25%;
+            }
+        }
+
+        .cartItem {
+            margin-top: 40px;
+            @extend .title;
+
+            td {
+                @extend th;
+                text-align: center;
+
+            }
+
+            .imgNtitle {
+                display: flex;
+
+                .productImg {
+                    width: 20%;
+                    height: auto;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    img {
+                        max-width: 90%;
+                        max-height: 90%
+                    }
+
+                }
+
+                .productName {
+                    width: 80%;
+                    height: 8.3vh;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    text-decoration: none;
+                }
+
+            }
+
+            .qtyCounter {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 3vw;
+                padding: 6px 12px;
+                border: 1.5px solid rgba(0, 0, 0, 0.4);
+                border-radius: 4px;
+                margin: auto;
+
+                .arrowContainer {
+                    margin-left: 16px;
+                    display: flex;
+                    flex-direction: column;
+                    cursor: pointer;
+
+                    .arrow {
+                        max-height: 16px;
+                    }
+                }
+            }
+        }
+    }
+
+    .belowTable {
+        display: flex;
+        justify-content: space-between;
+
+
+        .returnShop {
+            text-decoration: none;
+            border: 1.5px solid rgba(0, 0, 0, 0.4);
+            border-radius: 4px;
+            width: 15%;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            @include styles.font-poppins-medium(16px);
+            color: styles.$text-color-2;
+            cursor: pointer;
+            margin-bottom: 80px;
+        }
+    }
+
+    .belowCart {
+        display: flex;
+        justify-content: space-between;
+
+        .couponContainer {
+            width: 45%;
+            height: 55px;
+            display: flex;
+            justify-content: space-between;
+
+            .couponInput {
+                width: 56%;
+                text-indent: 24px;
+                border-radius: 4px;
+
+                &::placeholder {
+                    @include styles.font-poppins-regular(16px);
+                }
+            }
+        }
+
+        .checkoutContainer {
+            width: 40%;
+            border: 1.5px solid #111;
+            border-radius: 4px;
+            padding: 32px 24px;
+
+            .checkoutTitle {
+                @include styles.font-poppins-medium(20px);
+                margin-bottom: 20px;
+            }
+
+            .checkoutItem {
+                margin: 20px 0;
+                display: flex;
+                justify-content: space-between;
+                @include styles.font-poppins-regular(16px);
+            }
+
+            .checkoutLine {
+                width: 100%;
+                color: #111;
+                border-top: 1.5px solid #111;
+            }
+        }
+    }
+}

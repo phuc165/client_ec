@@ -5,7 +5,7 @@ import LeftArrow from '../../assets/svg/LeftArrow';
 const LeftArrowButton = ({ skip, onClick }) => {
     return (
         <button onClick={onClick} disabled={skip === 0} className={skip === 0 ? styles.disabledButton : ''}>
-            <LeftArrow />
+            <LeftArrow className={clsx(styles.svg)} />
         </button>
     );
 };

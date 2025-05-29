@@ -52,7 +52,7 @@ function Cart() {
                                     <div className={clsx(styles.qtyCounter)}>
                                         <span>{item.quantity.toString().padStart(2, '0')}</span>
                                         <div className={clsx(styles.arrowContainer)}>
-                                            <div
+                                            <button
                                                 onClick={() =>
                                                     dispatch(
                                                         updateQuantity({
@@ -66,8 +66,8 @@ function Cart() {
                                                 className={clsx(styles.arrow)}
                                             >
                                                 <QtyUpArrow />
-                                            </div>
-                                            <div
+                                            </button>
+                                            <button
                                                 onClick={() =>
                                                     item.quantity > 1 &&
                                                     dispatch(
@@ -82,7 +82,7 @@ function Cart() {
                                                 className={clsx(styles.arrow)}
                                             >
                                                 <QtyDownArrow />
-                                            </div>
+                                            </button>
                                         </div>
                                     </div>
                                 </td>

@@ -1,10 +1,11 @@
+// src/components/ProductDetail.js
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductById, fetchRelatedProducts } from '../../redux/slices/productSlice';
+import { addToCart } from '../../redux/slices/cartSlice';
 import styles from '../../styles/core/productDetail.module.scss';
 import clsx from 'clsx';
-
 import ImageGallery from '../../components/ProductGallery';
 import StarRatingDisplay from '../../components/StarRatingDisplay';
 import ProductHeart from '../../assets/svg/ProductHeart';
@@ -85,11 +86,26 @@ function ProductDetail() {
         setQuantity((prev) => prev + 1);
     };
 
+    const handleAddToCart = () => {
+        const price = selectedVariation?.price || singleProduct.discount_price;
+        dispatch(
+            addToCart({
+                productId: singleProduct._id,
+                attributes: { color: selectedColor, size: selectedSize },
+                quantity: quantity,
+                productData: {
+                    name: singleProduct.name,
+                    image: images[0],
+                    price: price,
+                },
+            }),
+        );
+    };
+
     const formatPrice = (price) => {
         return `$${parseFloat(price).toFixed(2)}`;
     };
 
-    // Create skeleton cards for loading state (5 items to match limit)
     const skeletonCards = Array(5)
         .fill(null)
         .map((_, index) => <ProductCardSkeleton key={index} />);
@@ -135,6 +151,9 @@ function ProductDetail() {
                             <div>{quantity}</div>
                             <div onClick={increaseQuantity}>+</div>
                         </div>
+                        <button className={clsx(styles.addToCart)} onClick={handleAddToCart}>
+                            Add To Cart
+                        </button>
                         <button className={clsx(styles.buyNow)}>Buy Now</button>
                         <ProductHeart />
                     </div>

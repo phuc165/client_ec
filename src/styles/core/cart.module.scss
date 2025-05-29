@@ -19,6 +19,10 @@
             th {
                 @include styles.font-poppins-regular(16px);
                 width: 25%;
+
+                &:last-child {
+                    width: 10%;
+                }
             }
         }
 
@@ -30,6 +34,9 @@
                 @extend th;
                 text-align: center;
 
+                &:last-child {
+                    width: 10%;
+                }
             }
 
             .imgNtitle {
@@ -80,6 +87,8 @@
                     }
                 }
             }
+
+
         }
     }
 

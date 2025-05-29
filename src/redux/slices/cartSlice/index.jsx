@@ -1,45 +1,38 @@
+// src/redux/slices/cartSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 const cartSlice = createSlice({
     name: 'cart',
     initialState: {
-        cartItems: localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [],
-        shippingAddress: localStorage.getItem('shippingAddress') ? JSON.parse(localStorage.getItem('shippingAddress')) : {},
-        paymentMethod: 'PayPal',
+        items: [],
     },
     reducers: {
         addToCart: (state, action) => {
-            const item = action.payload;
-            const existItem = state.cartItems.find((x) => x._id === item._id);
-
-            if (existItem) {
-                state.cartItems = state.cartItems.map((x) => (x._id === existItem._id ? item : x));
+            const { productId, attributes, quantity, productData } = action.payload;
+            const existingItem = state.items.find(
+                (item) => item.productId === productId && JSON.stringify(item.attributes) === JSON.stringify(attributes),
+            );
+            if (existingItem) {
+                existingItem.quantity += quantity;
             } else {
-                state.cartItems = [...state.cartItems, item];
+                state.items.push({ productId, attributes, quantity, productData });
             }
-
-            // Update localStorage
-            localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+        },
+        updateQuantity: (state, action) => {
+            const { productId, attributes, quantity } = action.payload;
+            const item = state.items.find((item) => item.productId === productId && JSON.stringify(item.attributes) === JSON.stringify(attributes));
+            if (item && quantity >= 1) {
+                item.quantity = quantity;
+            }
         },
         removeFromCart: (state, action) => {
-            state.cartItems = state.cartItems.filter((x) => x._id !== action.payload);
-            localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
-        },
-        saveShippingAddress: (state, action) => {
-            state.shippingAddress = action.payload;
-            localStorage.setItem('shippingAddress', JSON.stringify(action.payload));
-        },
-        savePaymentMethod: (state, action) => {
-            state.paymentMethod = action.payload;
-            localStorage.setItem('paymentMethod', JSON.stringify(action.payload));
-        },
-        clearCartItems: (state) => {
-            state.cartItems = [];
-            localStorage.removeItem('cartItems');
+            const { productId, attributes } = action.payload;
+            state.items = state.items.filter(
+                (item) => !(item.productId === productId && JSON.stringify(item.attributes) === JSON.stringify(attributes)),
+            );
         },
     },
 });
 
-export const { addToCart, removeFromCart, saveShippingAddress, savePaymentMethod, clearCartItems } = cartSlice.actions;
-
+export const { addToCart, updateQuantity, removeFromCart } = cartSlice.actions;
 export default cartSlice.reducer;

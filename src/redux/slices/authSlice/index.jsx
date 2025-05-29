@@ -20,7 +20,8 @@ export const login = createAsyncThunk('auth/login', async ({ email, password }, 
             return thunkAPI.rejectWithValue(error.message || 'Login failed');
         }
 
-        return await response.json();
+        const userData = await response.json();
+        return userData;
     } catch (error) {
         return thunkAPI.rejectWithValue(error.message || 'Login failed');
     }
@@ -43,7 +44,8 @@ export const register = createAsyncThunk('auth/register', async ({ name, email, 
             return thunkAPI.rejectWithValue(error.message || 'Registration failed');
         }
 
-        return await response.json();
+        const userData = await response.json();
+        return userData;
     } catch (error) {
         return thunkAPI.rejectWithValue(error.message || 'Registration failed');
     }
@@ -215,6 +217,7 @@ const authSlice = createSlice({
         },
         clearCredentials: (state) => {
             state.userInfo = null;
+            state.addresses = [];
             localStorage.removeItem('userInfo');
         },
         resetAuthState: (state) => {
@@ -254,7 +257,18 @@ const authSlice = createSlice({
                 state.error = action.payload;
             })
             // Logout reducers
+            .addCase(logout.pending, (state) => {
+                state.loading = true;
+            })
             .addCase(logout.fulfilled, (state) => {
+                state.loading = false;
+                state.userInfo = null;
+                state.addresses = [];
+                localStorage.removeItem('userInfo');
+            })
+            .addCase(logout.rejected, (state, action) => {
+                state.loading = false;
+                // Still clear credentials even if logout request fails
                 state.userInfo = null;
                 state.addresses = [];
                 localStorage.removeItem('userInfo');

@@ -18,7 +18,7 @@ const ProductCard = ({ product, isWishlist }) => {
         dispatch(
             addToCart({
                 productId: product._id,
-                attributes: { color: 'Black', size: 'Small' }, // Default attributes
+                attributes: { color: 'Black', size: 'Small' },
                 quantity: 1,
                 productData: {
                     name: product.name,

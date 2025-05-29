@@ -10,12 +10,23 @@ import TrashIcon from '../../assets/svg/TrashIcon';
 import ViewAllButton from '../../components/ViewAllButton';
 
 function Cart() {
-    const cartItems = useSelector((state) => state.cart.items);
     const dispatch = useDispatch();
+    const { items: cartItems, loading, error } = useSelector((state) => state.cart);
 
-    const subtotal = cartItems.reduce((sum, item) => sum + item.productData.price * item.quantity, 0);
+    const subtotal = cartItems.reduce((sum, item) => {
+        const price = item.productData?.price || 0;
+        return sum + price * item.quantity;
+    }, 0);
     const shipping = 0;
     const total = subtotal + shipping;
+
+    if (loading) {
+        return <div className={clsx(styles.container)}>Loading cart...</div>;
+    }
+
+    if (error) {
+        return <div className={clsx(styles.container)}>Error: {error}</div>;
+    }
 
     return (
         <div className={clsx(styles.container)}>
@@ -40,19 +51,19 @@ function Cart() {
                             <tr key={index} className={clsx(styles.cartItem)}>
                                 <td className={clsx(styles.imgNtitle)}>
                                     <div className={clsx(styles.productImg)}>
-                                        <img src={item.productData.image} alt={item.productData.name} />
+                                        <img src={item.productData?.image || null} alt={item.productData?.name || 'Product image'} />
                                     </div>
-                                    <div className={clsx(styles.productName)}>{item.productData.name}</div>
+                                    <div className={clsx(styles.productName)}>{item.productData?.name || 'Product Name'}</div>
                                 </td>
                                 <td>
-                                    {item.attributes.color}, {item.attributes.size}
+                                    {item.attributes?.color || 'N/A'}, {item.attributes?.size || 'N/A'}
                                 </td>
-                                <td>${item.productData.price.toFixed(2)}</td>
+                                <td>${(item.productData?.price || 0).toFixed(2)}</td>
                                 <td>
                                     <div className={clsx(styles.qtyCounter)}>
                                         <span>{item.quantity.toString().padStart(2, '0')}</span>
                                         <div className={clsx(styles.arrowContainer)}>
-                                            <button
+                                            <div
                                                 onClick={() =>
                                                     dispatch(
                                                         updateQuantity({
@@ -66,8 +77,8 @@ function Cart() {
                                                 className={clsx(styles.arrow)}
                                             >
                                                 <QtyUpArrow />
-                                            </button>
-                                            <button
+                                            </div>
+                                            <div
                                                 onClick={() =>
                                                     item.quantity > 1 &&
                                                     dispatch(
@@ -82,11 +93,11 @@ function Cart() {
                                                 className={clsx(styles.arrow)}
                                             >
                                                 <QtyDownArrow />
-                                            </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </td>
-                                <td>${(item.productData.price * item.quantity).toFixed(2)}</td>
+                                <td>${((item.productData?.price || 0) * item.quantity).toFixed(2)}</td>
                                 <td>
                                     <button
                                         onClick={() =>

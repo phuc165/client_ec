@@ -151,10 +151,9 @@ function ProductDetail() {
                             <div>{quantity}</div>
                             <div onClick={increaseQuantity}>+</div>
                         </div>
-                        <button className={clsx(styles.addToCart)} onClick={handleAddToCart}>
+                        <button className={clsx(styles.buyNow)} onClick={handleAddToCart}>
                             Add To Cart
                         </button>
-                        <button className={clsx(styles.buyNow)}>Buy Now</button>
                         <ProductHeart />
                     </div>
 

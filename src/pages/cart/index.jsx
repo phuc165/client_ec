@@ -4,6 +4,7 @@ import { updateQuantity, removeFromCart } from '../../redux/slices/cartSlice';
 import styles from '../../styles/core/cart.module.scss';
 import clsx from 'clsx';
 import { Link } from 'react-router';
+
 import QtyUpArrow from '../../assets/svg/QtyUpArrow';
 import QtyDownArrow from '../../assets/svg/QtyDownArrow';
 import TrashIcon from '../../assets/svg/TrashIcon';
@@ -43,8 +44,10 @@ function Cart() {
                 </thead>
                 <tbody>
                     {cartItems.length === 0 ? (
-                        <tr>
-                            <td colSpan='6'>Your cart is empty</td>
+                        <tr className={clsx(styles.emptyCart)}>
+                            <td colSpan='6' className={clsx(styles.mtCart)}>
+                                <img src='../../../public/images/cart/mtCart.png' className={clsx(styles.mtImg)} alt='' />
+                            </td>
                         </tr>
                     ) : (
                         cartItems.map((item, index) => (

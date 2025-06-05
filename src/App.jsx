@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router';
 import { ToastContainer } from 'react-toastify';
 import { publicRoutes } from './routes';
-import { DefaultLayout } from './layouts/layout.js';
+import { DefaultLayout } from './layouts/index.js';
 import { Fragment } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';

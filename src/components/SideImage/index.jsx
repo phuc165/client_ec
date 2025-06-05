@@ -3,7 +3,7 @@ import clsx from 'clsx';
 function SideImage() {
     return (
         <div className={clsx(styles.sideImage)}>
-            <img src='../../../public/images/login/sideImage.png' alt='' />
+            <img src='images/login/sideImage.png' alt='' />
         </div>
     );
 }

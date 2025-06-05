@@ -11,7 +11,10 @@
         "prepare": "husky install"
     },
     "dependencies": {
+        "@paypal/react-paypal-js": "^8.8.3",
         "@reduxjs/toolkit": "^2.6.0",
+        "@stripe/react-stripe-js": "^3.7.0",
+        "@stripe/stripe-js": "^7.3.1",
         "axios": "^1.8.1",
         "clsx": "^2.1.1",
         "react": "^19.0.0",

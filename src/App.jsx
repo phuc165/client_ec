@@ -10,10 +10,8 @@ import { fetchCart, clearCartState } from './redux/slices/cartSlice';
 import { logout } from './redux/slices/authSlice';
 import './styles/app.scss';
 
-// Child component to hold logic that uses hooks
 function AppContent() {
     const dispatch = useDispatch();
-    // Fix: use userInfo instead of user
     const userInfo = useSelector((state) => state.auth.userInfo);
     const navigate = useNavigate();
 

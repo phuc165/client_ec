@@ -4,7 +4,7 @@ import Home from '../pages/home';
 import About from '../pages/about';
 import Account from '../pages/account';
 import Cart from '../pages/cart';
-import CheckOut from '../pages/checkOut';
+import CheckOut from '../pages/checkout';
 import Contact from '../pages/contact';
 import Error404 from '../pages/error404';
 import Login from '../pages/login';

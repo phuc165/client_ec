@@ -1,4 +1,3 @@
-// src/components/Cart.js
 import { useSelector, useDispatch } from 'react-redux';
 import { updateQuantity, removeFromCart } from '../../redux/slices/cartSlice';
 import styles from '../../styles/core/cart.module.scss';
@@ -145,7 +144,9 @@ function Cart() {
                     <div className={clsx(styles.checkoutItem)}>
                         <span>Total:</span> <span>${total.toFixed(2)}</span>
                     </div>
-                    <ViewAllButton content='Process To Check Out' page='cart' className='checkout' />
+                    <Link to='/checkout'>
+                        <ViewAllButton content='Process To Check Out' page='cart' className='checkout' disabled={cartItems.length === 0} />
+                    </Link>
                 </div>
             </div>
         </div>

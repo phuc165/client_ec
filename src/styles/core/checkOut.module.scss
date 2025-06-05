@@ -1,0 +1,399 @@
+@use '../styles.scss';
+
+.container {
+    width: 83%;
+    margin: auto;
+
+    h1 {
+        @include styles.font-poppins-semibold(32px);
+        color: styles.$text-color-2;
+        margin-bottom: 40px;
+        text-align: center;
+    }
+
+    .cartSummary {
+        width: 100%;
+        margin-bottom: 40px;
+
+        h2 {
+            @include styles.font-poppins-medium(24px);
+            color: styles.$text-color-2;
+            margin-bottom: 24px;
+            padding: 0 40px;
+        }
+
+        .cartTable {
+            width: 100%;
+            border-collapse: collapse;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+            border-radius: 4px;
+            overflow: hidden;
+
+            thead {
+                tr {
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 24px 40px;
+                    background: styles.$secondary-color;
+                    align-items: center;
+
+                    th {
+                        @include styles.font-poppins-regular(16px);
+                        width: 20%;
+                        text-align: left;
+                        border: none;
+
+                        &:first-child {
+                            width: 25%;
+                        }
+
+                        &:last-child {
+                            width: 15%;
+                        }
+                    }
+                }
+            }
+
+            tbody {
+                tr {
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 24px 40px;
+                    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+                    align-items: center;
+
+                    &:last-child {
+                        border-bottom: none;
+                    }
+
+                    td {
+                        @include styles.font-poppins-regular(16px);
+                        width: 20%;
+                        text-align: left;
+                        color: styles.$text-color-2;
+
+                        &:first-child {
+                            width: 25%;
+                            font-weight: 500;
+                        }
+
+                        &:last-child {
+                            width: 15%;
+                            font-weight: 500;
+                        }
+                    }
+                }
+            }
+        }
+
+        .totals {
+            margin-top: 32px;
+            padding: 32px 40px;
+            border: 1.5px solid #111;
+            border-radius: 4px;
+            background: styles.$background-color;
+
+            div {
+                margin: 20px 0;
+                display: flex;
+                justify-content: space-between;
+                @include styles.font-poppins-regular(16px);
+                color: styles.$text-color-2;
+
+                &:first-child {
+                    margin-top: 0;
+                }
+
+                &:last-child {
+                    margin-bottom: 0;
+                    @include styles.font-poppins-medium(18px);
+                    font-weight: 600;
+                    padding-top: 20px;
+                    border-top: 1.5px solid #111;
+                }
+
+                span:last-child {
+                    font-weight: 500;
+                }
+            }
+
+            .checkoutLine {
+                width: 100%;
+                color: #111;
+                border-top: 1.5px solid #111;
+                margin: 20px 0;
+            }
+        }
+
+        .checkoutButton {
+            width: 100%;
+            height: 55px;
+            background: styles.$button-color;
+            color: styles.$text-color;
+            border: none;
+            border-radius: 4px;
+            @include styles.font-poppins-medium(16px);
+            cursor: pointer;
+            margin-top: 24px;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+                background: styles.$primary-color-1;
+            }
+
+            &:disabled {
+                background: styles.$text-color-1;
+                cursor: not-allowed;
+                opacity: 0.6;
+            }
+        }
+    }
+
+    // Billing and shipping forms (for future expansion)
+    .checkoutForm {
+        display: flex;
+        gap: 40px;
+        margin-bottom: 40px;
+
+        .billingDetails,
+        .shippingDetails {
+            flex: 1;
+            padding: 32px;
+            border: 1.5px solid rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+
+            h3 {
+                @include styles.font-poppins-medium(20px);
+                color: styles.$text-color-2;
+                margin-bottom: 24px;
+            }
+
+            .formGroup {
+                margin-bottom: 20px;
+
+                label {
+                    display: block;
+                    @include styles.font-poppins-regular(14px);
+                    color: styles.$text-color-2;
+                    margin-bottom: 8px;
+                }
+
+                input,
+                select,
+                textarea {
+                    width: 100%;
+                    padding: 12px 16px;
+                    border: 1.5px solid rgba(0, 0, 0, 0.2);
+                    border-radius: 4px;
+                    @include styles.font-poppins-regular(14px);
+                    transition: border-color 0.3s ease;
+
+                    &:focus {
+                        outline: none;
+                        border-color: styles.$button-color;
+                    }
+
+                    &::placeholder {
+                        color: styles.$text-color-1;
+                    }
+                }
+
+                textarea {
+                    resize: vertical;
+                    min-height: 80px;
+                }
+            }
+        }
+    }
+
+    // Payment methods section (for future expansion)
+    .paymentMethods {
+        margin-bottom: 40px;
+        padding: 32px;
+        border: 1.5px solid rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+
+        h3 {
+            @include styles.font-poppins-medium(20px);
+            color: styles.$text-color-2;
+            margin-bottom: 24px;
+        }
+
+        .paymentOption {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+            padding: 16px;
+            border: 1.5px solid rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+
+            &:hover {
+                background: styles.$secondary-color;
+            }
+
+            &.selected {
+                border-color: styles.$button-color;
+                background: styles.$secondary-color-1;
+            }
+
+            input[type="radio"] {
+                margin-right: 12px;
+            }
+
+            label {
+                @include styles.font-poppins-regular(16px);
+                color: styles.$text-color-2;
+                cursor: pointer;
+                flex: 1;
+            }
+        }
+    }
+
+    // Return to cart link
+    .returnCart {
+        text-decoration: none;
+        border: 1.5px solid rgba(0, 0, 0, 0.4);
+        border-radius: 4px;
+        width: 15%;
+        height: 55px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        @include styles.font-poppins-medium(16px);
+        color: styles.$text-color-2;
+        cursor: pointer;
+        margin-bottom: 40px;
+        transition: all 0.3s ease;
+
+        &:hover {
+            background: styles.$secondary-color;
+            border-color: styles.$button-color;
+        }
+    }
+
+    // Loading and error states
+    .loadingMessage,
+    .errorMessage,
+    .emptyMessage {
+        text-align: center;
+        padding: 40px;
+        @include styles.font-poppins-regular(18px);
+        color: styles.$text-color-1;
+    }
+
+    .errorMessage {
+        color: styles.$secondary-color-2;
+    }
+
+    // Responsive design
+    @media (max-width: 768px) {
+        width: 95%;
+
+        .cartSummary {
+            .cartTable {
+
+                thead tr,
+                tbody tr {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 8px;
+
+                    th,
+                    td {
+                        width: 100% !important;
+                    }
+                }
+            }
+
+            .totals {
+                padding: 20px;
+            }
+        }
+
+        .checkoutForm {
+            flex-direction: column;
+            gap: 20px;
+
+            .billingDetails,
+            .shippingDetails {
+                padding: 20px;
+            }
+        }
+
+        .returnCart {
+            width: 100%;
+        }
+    }
+}
+
+.addAddressButton {
+    width: 100%;
+    height: 45px;
+    background: transparent;
+    color: styles.$text-color-2;
+    border: 1.5px solid rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    margin: 16px 0;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background: styles.$secondary-color;
+        border-color: styles.$button-color;
+    }
+}
+
+.addressForm {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1.5px solid rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    background: styles.$secondary-color;
+}
+
+.saveAddressButton {
+    width: 100%;
+    height: 45px;
+    background: styles.$button-color;
+    color: styles.$text-color;
+    border: none;
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 16px;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background: styles.$primary-color-1;
+    }
+}
+
+.selectedAddress {
+    margin-top: 20px;
+    padding: 16px;
+    background: styles.$secondary-color-1;
+    border-radius: 4px;
+    border: 1.5px solid rgba(0, 0, 0, 0.1);
+
+    h4 {
+        font-family: 'Poppins', sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        color: styles.$text-color-2;
+        margin-bottom: 8px;
+    }
+
+    p {
+        font-family: 'Poppins', sans-serif;
+        font-size: 14px;
+        color: styles.$text-color-2;
+        margin: 0;
+    }
+}

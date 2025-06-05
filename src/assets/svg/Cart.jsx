@@ -2,7 +2,7 @@ import clsx from 'clsx';
 
 function Cart() {
     return (
-        <svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='none'>
+        <svg xmlns='https://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='none'>
             <path
                 d='M8.25 20.25C8.66421 20.25 9 19.9142 9 19.5C9 19.0858 8.66421 18.75 8.25 18.75C7.83579 18.75 7.5 19.0858 7.5 19.5C7.5 19.9142 7.83579 20.25 8.25 20.25Z'
                 stroke='black'

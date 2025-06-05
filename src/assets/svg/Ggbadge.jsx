@@ -2,7 +2,7 @@ import clsx from 'clsx';
 
 function Ggbadge() {
     return (
-        <svg xmlns='http://www.w3.org/2000/svg' viewBox='10 10 135 40' width='135' height='40'>
+        <svg xmlns='https://www.w3.org/2000/svg' viewBox='10 10 135 40' width='135' height='40'>
             <path d='M140 50H15c-2.75 0-5-2.25-5-5V15c0-2.75 2.25-5 5-5h125c2.75 0 5 2.25 5 5v30c0 2.75-2.25 5-5 5z' />
             <path
                 d='M140 10.8a4.2 4.2 0 0 1 4.2 4.2v30a4.2 4.2 0 0 1-4.2 4.2H15a4.2 4.2 0 0 1-4.2-4.2V15a4.2 4.2 0 0 1 4.2-4.2zm0-.8H15c-2.75 0-5 2.25-5 5v30c0 2.75 2.25 5 5 5h125c2.75 0 5-2.25 5-5V15c0-2.75-2.25-5-5-5z'

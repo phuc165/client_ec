@@ -2,7 +2,7 @@ import clsx from 'clsx';
 
 function UserIconOn() {
     return (
-        <svg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'>
+        <svg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='https://www.w3.org/2000/svg'>
             <rect width='32' height='32' rx='16' fill='#DB4444' />
             <path
                 d='M21.5 24V22.3333C21.5 21.4493 21.191 20.6014 20.6408 19.9763C20.0907 19.3512 19.3446 19 18.5667 19H13.4333C12.6554 19 11.9093 19.3512 11.3592 19.9763C10.809 20.6014 10.5 21.4493 10.5 22.3333V24'

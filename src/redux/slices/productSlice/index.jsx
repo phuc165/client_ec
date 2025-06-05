@@ -6,15 +6,15 @@ export const fetchProducts = createAsyncThunk('products/fetchProducts', async ({
         let url;
         switch (type) {
             case 'flashSale': {
-                url = `http://localhost:3000/api/v1/product/flashSale?limit=${limit}&skip=${skip}&select=id,name,image,ratings,no_of_ratings,discount_price,actual_price`;
+                url = `https://ecommerce-server-u4uh.onrender.com/api/v1/product/flashSale?limit=${limit}&skip=${skip}&select=id,name,image,ratings,no_of_ratings,discount_price,actual_price`;
                 break;
             }
             case 'explore': {
-                url = `http://localhost:3000/api/v1/product?limit=${limit}&skip=${skip}&select=id,name,image,ratings,no_of_ratings,discount_price,actual_price`;
+                url = `https://ecommerce-server-u4uh.onrender.com/api/v1/product?limit=${limit}&skip=${skip}&select=id,name,image,ratings,no_of_ratings,discount_price,actual_price`;
                 break;
             }
             case 'bestSeller': {
-                url = `http://localhost:3000/api/v1/product/bestSeller?limit=${limit}&skip=${skip}&select=id,name,image,ratings,no_of_ratings,discount_price,actual_price,sales`;
+                url = `https://ecommerce-server-u4uh.onrender.com/api/v1/product/bestSeller?limit=${limit}&skip=${skip}&select=id,name,image,ratings,no_of_ratings,discount_price,actual_price,sales`;
                 break;
             }
             default:
@@ -36,7 +36,7 @@ export const fetchProducts = createAsyncThunk('products/fetchProducts', async ({
 
 export const fetchProductById = createAsyncThunk('products/fetchProductById', async (id, { rejectWithValue }) => {
     try {
-        const url = `http://localhost:3000/api/v1/product/${id}`;
+        const url = `https://ecommerce-server-u4uh.onrender.com/api/v1/product/${id}`;
         const response = await axios.get(url);
         const product = response.data.data;
 
@@ -52,7 +52,7 @@ export const fetchProductById = createAsyncThunk('products/fetchProductById', as
 
 export const fetchRelatedProducts = createAsyncThunk('products/fetchRelatedProducts', async ({ productId, limit, skip }, { rejectWithValue }) => {
     try {
-        const url = `http://localhost:3000/api/v1/product/related/${productId}?limit=${limit}&skip=${skip}&select=id,name,image,ratings,no_of_ratings,discount_price,actual_price`;
+        const url = `https://ecommerce-server-u4uh.onrender.com/api/v1/product/related/${productId}?limit=${limit}&skip=${skip}&select=id,name,image,ratings,no_of_ratings,discount_price,actual_price`;
         const response = await axios.get(url);
         const { data } = response.data;
 

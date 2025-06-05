@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 // Base URL for API calls
-const baseUrl = 'http://localhost:3000/api/v1/user';
+const baseUrl = 'https://ecommerce-server-u4uh.onrender.com/api/v1/user';
 
 // Async thunk for user login
 export const login = createAsyncThunk('auth/login', async ({ email, password }, thunkAPI) => {

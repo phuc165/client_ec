@@ -7,11 +7,11 @@ export const fetchTimers = createAsyncThunk('timers/fetchTimers', async ({ type 
         let url;
         switch (type) {
             case 'flashSaleTimer': {
-                url = `http://localhost:3000/api/v1/timer/flashSaleTimer`;
+                url = `https://ecommerce-server-u4uh.onrender.com/api/v1/timer/flashSaleTimer`;
                 break;
             }
             case 'saleOffProductTimer': {
-                url = `http://localhost:3000/api/v1/timer/saleOffProductTimer`;
+                url = `https://ecommerce-server-u4uh.onrender.com/api/v1/timer/saleOffProductTimer`;
                 break;
             }
             default:

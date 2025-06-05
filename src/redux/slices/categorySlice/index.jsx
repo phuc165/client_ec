@@ -6,7 +6,7 @@ export const fetchCategory = createAsyncThunk('categories/fetchCategory', async 
         let url;
         switch (type) {
             case 'category': {
-                url = `http://localhost:3000/api/v1/category`;
+                url = `https://ecommerce-server-u4uh.onrender.com/api/v1/category`;
                 break;
             }
             default:

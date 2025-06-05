@@ -8,7 +8,7 @@ axios.defaults.withCredentials = true;
 // Fetch the user's cart from the API
 export const fetchCart = createAsyncThunk('cart/fetchCart', async (_, { rejectWithValue }) => {
     try {
-        const response = await axios.get('http://localhost:3000/api/v1/user/profile/cart');
+        const response = await axios.get('https://ecommerce-server-u4uh.onrender.com/api/v1/user/profile/cart');
         return response.data;
     } catch (error) {
         return rejectWithValue(error.response?.data?.message || 'Failed to fetch cart');
@@ -18,7 +18,7 @@ export const fetchCart = createAsyncThunk('cart/fetchCart', async (_, { rejectWi
 // Add an item to the cart
 export const addToCart = createAsyncThunk('cart/addToCart', async (cartItem, { rejectWithValue }) => {
     try {
-        const response = await axios.post('http://localhost:3000/api/v1/user/profile/cart', cartItem);
+        const response = await axios.post('https://ecommerce-server-u4uh.onrender.com/api/v1/user/profile/cart', cartItem);
         return response.data;
     } catch (error) {
         return rejectWithValue(error.response?.data?.message || 'Failed to add to cart');
@@ -28,7 +28,7 @@ export const addToCart = createAsyncThunk('cart/addToCart', async (cartItem, { r
 // Update item quantity in the cart
 export const updateQuantity = createAsyncThunk('cart/updateQuantity', async ({ productId, attributes, quantity }, { rejectWithValue }) => {
     try {
-        const response = await axios.put('http://localhost:3000/api/v1/user/profile/cart', {
+        const response = await axios.put('https://ecommerce-server-u4uh.onrender.com/api/v1/user/profile/cart', {
             productId,
             attributes,
             quantity,
@@ -42,7 +42,7 @@ export const updateQuantity = createAsyncThunk('cart/updateQuantity', async ({ p
 // Remove an item from the cart
 export const removeFromCart = createAsyncThunk('cart/removeFromCart', async ({ productId, attributes }, { rejectWithValue }) => {
     try {
-        const response = await axios.delete('http://localhost:3000/api/v1/user/profile/cart', {
+        const response = await axios.delete('https://ecommerce-server-u4uh.onrender.com/api/v1/user/profile/cart', {
             data: { productId, attributes },
         });
         return response.data;
@@ -54,7 +54,7 @@ export const removeFromCart = createAsyncThunk('cart/removeFromCart', async ({ p
 // Clear the cart
 export const clearCart = createAsyncThunk('cart/clearCart', async (_, { rejectWithValue }) => {
     try {
-        const response = await axios.delete('http://localhost:3000/api/v1/user/profile/cart/clear');
+        const response = await axios.delete('https://ecommerce-server-u4uh.onrender.com/api/v1/user/profile/cart/clear');
         return response.data;
     } catch (error) {
         return rejectWithValue(error.response?.data?.message || 'Failed to clear cart');

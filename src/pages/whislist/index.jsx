@@ -23,7 +23,7 @@ function Whislist() {
 
             try {
                 const response = await axios.get(
-                    `http://localhost:3000/api/v1/product?limit=${limit}&skip=${currentSkip}&select=id,name,image,ratings,no_of_ratings,discount_price,actual_price`,
+                    `https://ecommerce-server-u4uh.onrender.com/api/v1/product?limit=${limit}&skip=${currentSkip}&select=id,name,image,ratings,no_of_ratings,discount_price,actual_price`,
                 );
 
                 const { data, total } = response.data; // Destructure total - might be still useful for totalProducts state

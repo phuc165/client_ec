@@ -81,7 +81,7 @@ function Categories({ categories = [] }) {
 
             try {
                 const response = await axios.get(
-                    `http://localhost:3000/api/v1/product/subcategory/${subCategory}?limit=${limit}&skip=${skip}&select=id,name,image,ratings,no_of_ratings,discount_price,actual_price`,
+                    `https://ecommerce-server-u4uh.onrender.com/api/v1/product/subcategory/${subCategory}?limit=${limit}&skip=${skip}&select=id,name,image,ratings,no_of_ratings,discount_price,actual_price`,
                 );
 
                 // Assuming your backend returns { success: true, message: "...", data: [...] }

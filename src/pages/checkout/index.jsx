@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { fetchCart } from '../../redux/slices/cartSlice';
+import PaymentOptionsContent from '../../components/PaymentOptionsContent'; // Import PaymentOptionsContent
 import { getAddresses, addAddress } from '../../redux/slices/authSlice';
 import styles from '../../styles/core/checkOut.module.scss';
 import clsx from 'clsx';
@@ -18,6 +19,7 @@ function CheckOut() {
         block: '',
         address: '',
     });
+    const [showPaymentOptions, setShowPaymentOptions] = useState(false);
 
     useEffect(() => {
         dispatch(fetchCart());
@@ -70,6 +72,13 @@ function CheckOut() {
     }, 0);
     const shipping = 0;
     const total = subtotal + shipping;
+    const orderDescription = `Payment for order at ${new Date().toLocaleString()}`;
+
+    const handleProceedToPayment = () => {
+        if (selectedAddress) {
+            setShowPaymentOptions(true);
+        }
+    };
 
     return (
         <div className={clsx(styles.container)}>
@@ -208,10 +217,20 @@ function CheckOut() {
                     </div>
                 </div>
 
-                <button className={clsx(styles.checkoutButton)} disabled={!selectedAddress}>
-                    {selectedAddress ? 'Proceed to Payment' : 'Please Select Address'}
+                <button className={clsx(styles.checkoutButton)} disabled={!selectedAddress || showPaymentOptions} onClick={handleProceedToPayment}>
+                    {selectedAddress ? (showPaymentOptions ? 'Payment Options Below' : 'Proceed to Payment') : 'Please Select Address'}
                 </button>
             </div>
+
+            {showPaymentOptions && selectedAddress && (
+                <div className={clsx(styles.paymentSection)}>
+                    <h2>Payment Method</h2>
+                    <PaymentOptionsContent
+                        orderAmount={total * 100} // VNPAY expects amount in smallest currency unit (e.g., xu for VND)
+                        orderDescription={orderDescription}
+                    />
+                </div>
+            )}
         </div>
     );
 }

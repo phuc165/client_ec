@@ -12,6 +12,7 @@ import ProductDetail from '../pages/productDetail';
 import Signup from '../pages/signup';
 import Whislist from '../pages/whislist';
 import Reviews from '../pages/reviews';
+import PaymentResultPage from '../pages/PaymentResultPage'; // Import the new page
 
 const publicRoutes = [
     { path: '/', Component: Home, layout: HomeLayout },
@@ -27,6 +28,7 @@ const publicRoutes = [
     { path: '/whislist', Component: Whislist },
     { path: '/reviews', Component: Reviews },
     { path: '/product/:id', Component: ProductDetail },
+    { path: '/payment-result', Component: PaymentResultPage }, // Add route for PaymentResultPage
 ];
 
 const privateRoutes = [];

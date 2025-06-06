@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, Link } from 'react-router-dom'; // Assuming React Router is used
+import { useLocation, Link } from 'react-router'; // Assuming React Router is used
 import axios from 'axios';
 
 // Helper to parse query string

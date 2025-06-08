@@ -6,7 +6,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 // Async thunk for user login
 export const login = createAsyncThunk('auth/login', async ({ email, password }, thunkAPI) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/auth`, {
+        const response = await fetch(`${API_BASE_URL}/user/auth`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -30,7 +30,7 @@ export const login = createAsyncThunk('auth/login', async ({ email, password }, 
 // Async thunk for user registration
 export const register = createAsyncThunk('auth/register', async ({ name, email, password }, thunkAPI) => {
     try {
-        const response = await fetch(`${API_BASE_URL}`, {
+        const response = await fetch(`${API_BASE_URL}/user`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -54,7 +54,7 @@ export const register = createAsyncThunk('auth/register', async ({ name, email, 
 // Async thunk for user logout
 export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/logout`, {
+        const response = await fetch(`${API_BASE_URL}/user/logout`, {
             method: 'POST',
             credentials: 'include',
         });
@@ -73,7 +73,7 @@ export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
 // Async thunk for getting user profile
 export const getUserProfile = createAsyncThunk('auth/getUserProfile', async (_, thunkAPI) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/profile`, {
+        const response = await fetch(`${API_BASE_URL}/user/profile`, {
             method: 'GET',
             credentials: 'include',
         });
@@ -92,7 +92,7 @@ export const getUserProfile = createAsyncThunk('auth/getUserProfile', async (_, 
 // Async thunk for updating user profile
 export const updateUserProfile = createAsyncThunk('auth/updateUserProfile', async (userData, thunkAPI) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/profile`, {
+        const response = await fetch(`${API_BASE_URL}/user/profile`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -115,7 +115,7 @@ export const updateUserProfile = createAsyncThunk('auth/updateUserProfile', asyn
 // Async thunk for getting user addresses
 export const getAddresses = createAsyncThunk('auth/getAddresses', async (_, thunkAPI) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/profile/addresses`, {
+        const response = await fetch(`${API_BASE_URL}/user/profile/addresses`, {
             method: 'GET',
             credentials: 'include',
         });
@@ -134,7 +134,7 @@ export const getAddresses = createAsyncThunk('auth/getAddresses', async (_, thun
 // Async thunk for adding a new address
 export const addAddress = createAsyncThunk('auth/addAddress', async (addressData, thunkAPI) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/profile/addresses`, {
+        const response = await fetch(`${API_BASE_URL}/user/profile/addresses`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -157,7 +157,7 @@ export const addAddress = createAsyncThunk('auth/addAddress', async (addressData
 // Async thunk for updating an address
 export const updateAddress = createAsyncThunk('auth/updateAddress', async ({ addressId, addressData }, thunkAPI) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/profile/addresses/${addressId}`, {
+        const response = await fetch(`${API_BASE_URL}/user/profile/addresses/${addressId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -180,7 +180,7 @@ export const updateAddress = createAsyncThunk('auth/updateAddress', async ({ add
 // Async thunk for deleting an address
 export const deleteAddress = createAsyncThunk('auth/deleteAddress', async (addressId, thunkAPI) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/profile/addresses/${addressId}`, {
+        const response = await fetch(`${API_BASE_URL}/user/profile/addresses/${addressId}`, {
             method: 'DELETE',
             credentials: 'include',
         });

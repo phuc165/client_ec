@@ -15,7 +15,7 @@ export const createOrder = createAsyncThunk('orders/createOrder', async (order, 
             },
         };
 
-        const { data } = await axios.post('/api/orders', order, config);
+        const { data } = await axios.post(`${API_BASE_URL}/orders`, order, config);
         return data;
     } catch (error) {
         return rejectWithValue(error.response && error.response.data.message ? error.response.data.message : error.message);
@@ -34,7 +34,7 @@ export const getOrderDetails = createAsyncThunk('orders/getOrderDetails', async 
             },
         };
 
-        const { data } = await axios.get(`/api/orders/${id}`, config);
+        const { data } = await axios.get(`${API_BASE_URL}/orders/${id}`, config);
         return data;
     } catch (error) {
         return rejectWithValue(error.response && error.response.data.message ? error.response.data.message : error.message);

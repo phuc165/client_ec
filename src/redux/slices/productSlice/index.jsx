@@ -1,20 +1,22 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export const fetchProducts = createAsyncThunk('products/fetchProducts', async ({ limit, skip, type }, { rejectWithValue }) => {
     try {
         let url;
         switch (type) {
             case 'flashSale': {
-                url = `https://ecommerce-server-u4uh.onrender.com/api/v1/product/flashSale?limit=${limit}&skip=${skip}&select=id,name,image,ratings,no_of_ratings,discount_price,actual_price`;
+                url = `${API_BASE_URL}/product/flashSale?limit=${limit}&skip=${skip}&select=id,name,image,ratings,no_of_ratings,discount_price,actual_price`;
                 break;
             }
             case 'explore': {
-                url = `https://ecommerce-server-u4uh.onrender.com/api/v1/product?limit=${limit}&skip=${skip}&select=id,name,image,ratings,no_of_ratings,discount_price,actual_price`;
+                url = `${API_BASE_URL}/product?limit=${limit}&skip=${skip}&select=id,name,image,ratings,no_of_ratings,discount_price,actual_price`;
                 break;
             }
             case 'bestSeller': {
-                url = `https://ecommerce-server-u4uh.onrender.com/api/v1/product/bestSeller?limit=${limit}&skip=${skip}&select=id,name,image,ratings,no_of_ratings,discount_price,actual_price,sales`;
+                url = `${API_BASE_URL}/product/bestSeller?limit=${limit}&skip=${skip}&select=id,name,image,ratings,no_of_ratings,discount_price,actual_price,sales`;
                 break;
             }
             default:
@@ -36,7 +38,7 @@ export const fetchProducts = createAsyncThunk('products/fetchProducts', async ({
 
 export const fetchProductById = createAsyncThunk('products/fetchProductById', async (id, { rejectWithValue }) => {
     try {
-        const url = `https://ecommerce-server-u4uh.onrender.com/api/v1/product/${id}`;
+        const url = `${API_BASE_URL}/product/${id}`;
         const response = await axios.get(url);
         const product = response.data.data;
 
@@ -52,7 +54,7 @@ export const fetchProductById = createAsyncThunk('products/fetchProductById', as
 
 export const fetchRelatedProducts = createAsyncThunk('products/fetchRelatedProducts', async ({ productId, limit, skip }, { rejectWithValue }) => {
     try {
-        const url = `https://ecommerce-server-u4uh.onrender.com/api/v1/product/related/${productId}?limit=${limit}&skip=${skip}&select=id,name,image,ratings,no_of_ratings,discount_price,actual_price`;
+        const url = `${API_BASE_URL}/product/related/${productId}?limit=${limit}&skip=${skip}&select=id,name,image,ratings,no_of_ratings,discount_price,actual_price`;
         const response = await axios.get(url);
         const { data } = response.data;
 

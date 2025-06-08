@@ -2,16 +2,18 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export const fetchTimers = createAsyncThunk('timers/fetchTimers', async ({ type }, { rejectWithValue }) => {
     try {
         let url;
         switch (type) {
             case 'flashSaleTimer': {
-                url = `https://ecommerce-server-u4uh.onrender.com/api/v1/timer/flashSaleTimer`;
+                url = `${API_BASE_URL}/timer/flashSaleTimer`;
                 break;
             }
             case 'saleOffProductTimer': {
-                url = `https://ecommerce-server-u4uh.onrender.com/api/v1/timer/saleOffProductTimer`;
+                url = `${API_BASE_URL}/timer/saleOffProductTimer`;
                 break;
             }
             default:

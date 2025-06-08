@@ -1,12 +1,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export const fetchCategory = createAsyncThunk('categories/fetchCategory', async ({ type }, { rejectWithValue }) => {
     try {
         let url;
         switch (type) {
             case 'category': {
-                url = `https://ecommerce-server-u4uh.onrender.com/api/v1/category`;
+                url = `${API_BASE_URL}/category`;
                 break;
             }
             default:

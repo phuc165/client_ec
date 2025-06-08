@@ -22,7 +22,7 @@ function Categories({ categories = [] }) {
               })
             : [];
     }, [categories]);
-
+    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
     // Set default subcategory from the first available subcategory
     const defaultSubcategory = allSubcategories.length > 0 ? allSubcategories[0] : null;
 
